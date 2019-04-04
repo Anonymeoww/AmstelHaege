@@ -1,0 +1,16 @@
+Inhoudelijk:
+- Datastructuur bespreken
+- Basis algoritme opstellen
+- Check algoritme opstelen
+- Hoe gaan we versimpeld visualiseren?
+
+Algemeen:
+- Afspraken maken over naming conventions (van bestanden, classes en methods)
+- Afspreken wie wanneer kan pushen
+- readme opstellen
+- requirements.txt opstellen
+
+Uitzoeken:
+- Wanneer werk je in een andere branch?
+- Wat is origin?
+- Hoe connect je een andere branch met de master branch?
