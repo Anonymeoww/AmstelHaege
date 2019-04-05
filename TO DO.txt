@@ -9,8 +9,3 @@ Algemeen:
 - Afspreken wie wanneer kan pushen
 - readme opstellen
 - requirements.txt opstellen
-
-Uitzoeken:
-- Wanneer werk je in een andere branch?
-- Wat is origin?
-- Hoe connect je een andere branch met de master branch?
