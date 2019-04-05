@@ -1,4 +1,4 @@
-dit is een random zin van JS
+Hey ik edit dit nog eens DCJ
 # AmstelHaege
 UvA MPROG AmstelHaege project
 Hey ik edit dit
