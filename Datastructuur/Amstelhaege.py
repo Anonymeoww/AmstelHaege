@@ -1,4 +1,5 @@
 from house import House
+from water import Water
 
 
 class Amstelhaege():
@@ -10,11 +11,16 @@ class Amstelhaege():
         """
         Create houses & water
         """
-        self.houses = self.load_houses("properties.txt")
+        self.houses = self.load_houses("properties.txt", 10)
         # self.water = self.load_water()
 
-    def load_houses(self, filename):
+    def load_houses(self, filename, numhouses):
+        #calculate number of houses for each type
+        num_e = int(numhouses * 0.2)
+        num_b = int(numhouses * 0.5)
+        num_m = int(numhouses * 0.3)
 
+        #reading data from TXTFILE
         houses_data = []
 
         with open(filename, "r") as f:
@@ -29,6 +35,8 @@ class Amstelhaege():
 
         houses = {}
 
+        id = 0
+
         for house_data in houses_data:
             name = house_data[0]
             depth = house_data[1]
@@ -37,14 +45,20 @@ class Amstelhaege():
             extra_wpm = house_data[4]
             worth = house_data[5]
 
-            house = House(name, depth, height, minvr, extra_wpm, worth)
-            print(house)
-            houses[name] = house
+            if name == 'eengezinswoning':
+                nummy = num_e
+            elif name == 'bungalow':
+                nummy = num_b
+            elif name == 'maison':
+                nummy = num_m
 
-        print(houses)
+            #create house objects
+            for woning in range(nummy):
+                house = House(id, name, depth, height, minvr, extra_wpm, worth)
+                houses[id] = house
+                id = id + 1
+
         return houses
-        # should return list of dictionaries for each house. Each dictionary is {'house_id': 'x,y'}
-
 
 if __name__ == "__main__":
     amstelhaege = Amstelhaege()
