@@ -1,5 +1,6 @@
 from house import House
 
+
 class Amstelhaege():
     """
     This is the full neighbourhood class.
@@ -37,8 +38,10 @@ class Amstelhaege():
             worth = house_data[5]
 
             house = House(name, depth, height, minvr, extra_wpm, worth)
+            print(house)
             houses[name] = house
 
+        print(houses)
         return houses
         # should return list of dictionaries for each house. Each dictionary is {'house_id': 'x,y'}
 

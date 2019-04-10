@@ -14,3 +14,6 @@ class House(object):
         self.minvr = minvr
         self.extra_wpm = extra_wpm
         self.worth = worth
+
+    def __str__(self):
+        return f"{self.name}"
