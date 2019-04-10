@@ -1,11 +1,50 @@
+- Datastructuur schrijven
+- Class AmstelHaege
+- Heeft een list met dictionaries met id + de coordinaten van alle huizen (van linksonder)
+- Heeft een list met de coordinaten van alle lichamen water
+- Heeft een methode om de totale vrijstand te berekenen
+- Heeft een methode om de totale waarde te berekenen en te returnen
+  - Class Huis
+    - Inladen in Amstelhaege met textfile
+      - textfile heeft 3 type huizen met 3 verschillende dictionaries
+      - Bij het aanroepen van AmstelHaege geef je het aantal huizen mee,
+        hierdoor kan je het correcte aantal huizen van elk type inladen
+      - Heeft een methode om extra vrijstand van zichzelf te berekenen
+      - Heeft een methode om zijn waarde aan te passen adhv extra vrijstand
+  - Class Water
+    - Oppervlakte
+    - Afmetingen
+
+Startpunt:
+- Een matrix met 0'en en 1'en, elk huis is even groot als een maison.
+  Hierdoor weet je dat alles past. elk cijfer heeft breedte en hoogte van maiso.
+  Totale grootte is 160x180.
+
+Optimaliseren:
+Simulated Annealing toepassen door huisjes te swappen en de waarde te vergelijken.
+
+Visualiseren:
+- Matplotlib
+  - grid met geplaatste huizen
+  - grafiek met aantal iteraties vs totale waarde
+  - grafiek met aantal iteraties vs totale extra vrijstand
+
 Inhoudelijk:
-- Datastructuur bespreken
-- Basis algoritme opstellen
-- Check algoritme opstelen
-- Hoe gaan we versimpeld visualiseren?
+- Datastructuur opstellen (JS)
+- Startmatrix maken (DCJ)
+
+Algoritmes:
+- Hill Climber
+- Simulated Annealing
 
 Algemeen:
 - Afspraken maken over naming conventions (van bestanden, classes en methods)
 - Afspreken wie wanneer kan pushen
 - readme opstellen
 - requirements.txt opstellen
+
+Presentatie:
+- Introductie
+- Methode
+- Resultaten
+- Conclusie
