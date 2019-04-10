@@ -1,0 +1,3 @@
+{'naam': eengezinswoning, 'breedte': 8, 'hoogte': 8, 'minvr': 2, 'extra_wpm': 3, 'waarde': 285000}
+{'naam': bungalow, 'breedte': 10, 'hoogte': 7.5, 'minvr': 3, 'extra_wpm': 4, 'waarde': 399000}
+{'naam': maison, 'breedte': 11, 'hoogte': 10.5, 'minvr': 6, 'extra_wpm': 6, 'waarde': 610000}
