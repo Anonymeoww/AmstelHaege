@@ -3,7 +3,7 @@ class House(object):
     Representation of a house in AmstelHaege
     """
 
-    def __init__(self, name, depth, height, minvr, extra_wpm, worth):
+    def __init__(self, id, name, depth, height, minvr, extra_wpm, worth):
         """
         Initializes a House
         """
