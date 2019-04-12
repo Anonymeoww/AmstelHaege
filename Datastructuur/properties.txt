@@ -4,6 +4,7 @@ eengezinswoning
 2
 3
 285000
+0.2
 
 bungalow
 10
@@ -11,6 +12,7 @@ bungalow
 3
 4
 399000
+0.5
 
 maison
 11
@@ -18,3 +20,4 @@ maison
 6
 6
 610000
+0.3

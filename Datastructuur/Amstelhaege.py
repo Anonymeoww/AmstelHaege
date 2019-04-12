@@ -1,26 +1,23 @@
 from house import House
 from water import Water
 
+INPUTFILE = 'properties.txt'
+
 
 class Amstelhaege():
     """
     This is the full neighbourhood class.
     """
-
     def __init__(self):
         """
         Create houses & water
         """
-        self.houses = self.load_houses("properties.txt", 10)
+        self.houses = self.load_houses(INPUTFILE, 10)
         # self.water = self.load_water()
 
     def load_houses(self, filename, numhouses):
-        #calculate number of houses for each type
-        num_e = int(numhouses * 0.2)
-        num_b = int(numhouses * 0.5)
-        num_m = int(numhouses * 0.3)
 
-        #reading data from TXTFILE
+        # reading data from TXTFILE
         houses_data = []
 
         with open(filename, "r") as f:
@@ -34,7 +31,6 @@ class Amstelhaege():
         houses_data.append(house_data)
 
         houses = {}
-
         id = 0
 
         for house_data in houses_data:
@@ -44,21 +40,18 @@ class Amstelhaege():
             minvr = house_data[3]
             extra_wpm = house_data[4]
             worth = house_data[5]
+            part = house_data[6]
+            amount = int(float(part) * numhouses)
 
-            if name == 'eengezinswoning':
-                nummy = num_e
-            elif name == 'bungalow':
-                nummy = num_b
-            elif name == 'maison':
-                nummy = num_m
-
-            #create house objects
-            for woning in range(nummy):
+            # create house objects
+            for woning in range(amount):
                 house = House(id, name, depth, height, minvr, extra_wpm, worth)
                 houses[id] = house
                 id = id + 1
 
+        print(houses)
         return houses
+
 
 if __name__ == "__main__":
     amstelhaege = Amstelhaege()
