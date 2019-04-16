@@ -6,9 +6,6 @@
 - Heeft een methode om de totale waarde te berekenen en te returnen
   - Class Huis
     - Inladen in Amstelhaege met textfile
-      - textfile heeft 3 type huizen met 3 verschillende dictionaries
-      - Bij het aanroepen van AmstelHaege geef je het aantal huizen mee,
-        hierdoor kan je het correcte aantal huizen van elk type inladen
       - Heeft een methode om extra vrijstand van zichzelf te berekenen
       - Heeft een methode om zijn waarde aan te passen adhv extra vrijstand
   - Class Water
@@ -16,9 +13,17 @@
     - Afmetingen
 
 Startpunt:
-- Een matrix met 0'en en 1'en, elk huis is even groot als een maison.
-  Hierdoor weet je dat alles past. elk cijfer heeft breedte en hoogte van maiso.
-  Totale grootte is 160x180.
+- grid met nullen en enen. Iedere nul heeft de afmetingen van een maison.
+  Op die manier kun je uitrekenen wat de coördinaten zijn op de plekken waar je iets hebt neergezet.
+  Dan hoef je niet meer ervoor te zorgen dat er alleen een 1 wordt geplaatst wanneer daaromheen allemaal nullen zijn
+- Extra vrijstand berekenen:
+    - Eerst als rechthoek eromheen, later met ronde hoeken.
+    - Extra vrijstand berekenen door te bepalen welk huis het dichtst bij is.
+
+Algoritme:
+- Een neighbouring solution is het verplaatsen van een random huis
+- Hiervoor moet er een lijst zijn met coordinaten van geplaatste huizen en een lijst met coordinaten van mogelijke zetten
+
 
 Optimaliseren:
 Simulated Annealing toepassen door huisjes te swappen en de waarde te vergelijken.
@@ -29,22 +34,15 @@ Visualiseren:
   - grafiek met aantal iteraties vs totale waarde
   - grafiek met aantal iteraties vs totale extra vrijstand
 
-Inhoudelijk:
-- Datastructuur opstellen (JS)
-- Startmatrix maken (DCJ)
-
-Algoritmes:
-- Hill Climber
-- Simulated Annealing
-
 Algemeen:
-- Afspraken maken over naming conventions (van bestanden, classes en methods)
-- Afspreken wie wanneer kan pushen
+- Water is onderdeel van de vrijstand
 - readme opstellen
 - requirements.txt opstellen
 
 Presentatie:
 - Introductie
+  - Er moet een tabel worden ingevoegd met de data van de verschillende type huizen
 - Methode
+  - Pseudocode ipv echte code
 - Resultaten
 - Conclusie
