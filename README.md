@@ -2,6 +2,7 @@
 
 De ``README`` bevat momenteel een overzicht van de voortgang van het project. 
 Dit bestaat uit de (deels) voltooide onderdelen en een ``TODO`` lijst.
+De presentatie van onze voortgang is te vinden op: https://docs.google.com/presentation/d/1-ykhshuqPHTAuamN9fnqhy0t02G3UZbm6g8HnmtCyvM/edit?usp=sharing
 
 DONE
 
