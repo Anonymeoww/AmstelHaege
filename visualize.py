@@ -3,9 +3,6 @@ from matplotlib.patches import Rectangle
 
 def linegraph(list):
     plt.plot(list)
-    # plt.plot(list1)
-    # plt.plot(list2)
-    # plt.plot(list3)
     plt.ylabel('Waarde')
     plt.xlabel('Iteraties')
     plt.show()
@@ -28,6 +25,3 @@ def grid(houses_list):
         currentAxis.add_patch(Rectangle((x[i], y[i]), 1, 1))
         i=i+1
     plt.show()
-
-if __name__ == "__main__":
-    linegraph(list)

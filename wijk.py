@@ -12,7 +12,7 @@ Hier komt een tekst te staan
 HOUSES_NUMBER = 10
 BREADTH = 16
 HEIGHT = 18
-ITERATIONS = 2000
+ITERATIONS = 1000
 
 def init(houses_number, n, m):
     """
@@ -124,7 +124,7 @@ def check_surr(ah, i, j, house_id, old_y, old_x):
 
 def change(ah, houses_list, house_id, new_x, new_y):
     """
-    Veranderd de positie van het huis en plot de nieuwe wijk
+    Verandert de positie van het huis en plot de nieuwe wijk
     """
 
     for house in houses_list:
@@ -179,7 +179,7 @@ if __name__ == "__main__":
     # print(f"Waarde wijk: {curr_waarde}")
     best_worth = curr_waarde
     vis.grid(houses_list)
-    # print(Amstelhaege)
+    print(Amstelhaege)
 
     # verander random positie huis annealing en plot
     done_iterations = 0
@@ -194,7 +194,7 @@ if __name__ == "__main__":
 
         # doorsturen naar SA.py
         # print(buur_waarde)
-        if SA.sim_an(curr_waarde, buur_waarde, done_iterations, best_worth):
+        if SA.sim_an(curr_waarde, buur_waarde, done_iterations, best_worth, ITERATIONS):
           Amstelhaege = buur_Amstelhaege
           houses_list = buur_houses_list
           curr_waarde = buur_waarde
@@ -202,7 +202,7 @@ if __name__ == "__main__":
               best_worth = curr_waarde
 
         waardes.append(curr_waarde)
-        print(waardes)
+        # print(waardes)
 
         print(f"Waarde wijk: {buur_waarde}")
         print(f"Done Iterations = {done_iterations}")
