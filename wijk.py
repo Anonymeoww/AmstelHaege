@@ -1,63 +1,47 @@
 import numpy as np
 import random as ran
 from math import sqrt
-# import Dilisha
 import SA
 import visualize as vis
+import math
 
 """
 Hier komt een tekst te staan
 """
 
 HOUSES_NUMBER = 10
-BREADTH = 16
-HEIGHT = 18
+BREADTH = 18
+HEIGHT = 16
 ITERATIONS = 1000
 
 def init(houses_number, n, m):
     """
-    Initialiseert en plot de eerste wijk
+    Initialiseert de eerste random wijk
     """
 
-    # initialize Amstelhaege
-    ah = np.array([[0] * n for i in range(m)])
-
-    # plot Amstelhaege
     houses_list = []
     house_id = 1
-    while houses_number > 0:
-        i = ran.randint(1, n)
-        j = ran.randint(1, (m - 5))
+    for number in range(houses_number):
+        house = {'id': house_id, 'type': None, 'x': None, 'y': None, 'o.r.': None, 'waarde': None}
+        houses_list.append(house)
+        houses_number = houses_number + 1
 
-        old_y = old_x = 0
+        placed = False
+        while placed == False:
+            i = ran.randint(1, n)
+            j = ran.randint(1, (m - 5))
+            print(i)
 
-        if check_surr(ah, i, j, house_id, old_y, old_x):
-            ah[i][j] = house_id
-            houses_list.append({'id': house_id, 'x': j, 'y': i, 'o.r.': None, 'waarde': None})
-            house_id = house_id + 1
-            houses_number = houses_number - 1
+            old_y = old_x = 0
 
-    return ah, houses_list
+            if check_surr(i, j, house_id, houses_list):
+                house['y'] = i
+                house['x'] = j
+                print("PLACED")
+                placed = True
+                house_id = house_id + 1
 
-
-def plot(ah, houses_list):
-    """
-    Plot de wijk
-    """
-
-    for house in houses_list:
-        j = house['x']
-        i = house['y']
-        ah[i][j] = house['id']
-    # print(ah)
-
-
-def visualiseer(Amstelhaege):
-    """
-    Visualiseert de wijk
-    """
-
-    return []
+    return houses_list
 
 
 def waarde(houses):
@@ -70,75 +54,54 @@ def waarde(houses):
         house['waarde'] = 610000*(1+0.01*(olr*6))
         tot_value = tot_value + house['waarde']
 
-    # print(houses)
-
     return houses, tot_value
 
 
-def random_replace(ah, houses_number, houses_list):
+def random_replace(houses_number, houses_list):
     """
     verplaatst random een houses_list
     """
 
     # selecteer een willekeurig huis
     house_id = ran.randint(1, houses_number)
-    # print(f"house_id: {house_id}")
 
     # bepaal nieuwe coordinaten:
     for house in houses_list:
         if house['id'] == house_id:
-            # print(f"Old x: {house['x']}")
-            # print(f"Old y: {house['y']}")
             new_x = house['x'] + ran.randint(-1, 1)
             new_y = house['y'] + ran.randint(-1, 1)
+            if check_surr(new_y, new_x, house_id, houses_list):
+                house['x'] = new_x
+                house['y'] = new_y
+                print("VERANDERD!!!")
 
-    # print(f"New x: {new_x}")
-    # print(f"New y: {new_y}")
-
-    # voer de verandering door
-    return change(ah, houses_list, house_id, new_x, new_y)
+    return houses_list
 
 
-def check_surr(ah, i, j, house_id, old_y, old_x):
+def check_surr(new_y, new_x, house_id, houses_list):
     """
     Checkt of het huis de juiste omliggende ruimte heeft
     """
-    # print(house_id)
-    house_id = (0 or house_id)
-    if ah[i-1][j-1] == ah[i-1][j] == ah[i-1][j+1] == ah[i][j-1] == ah[i][j+1] ==\
-        ah[i+1][j-1] == ah[i+1][j] == ah[i+1][j+1] == ah[i][j] == 0:
-        return True
 
-    ah[old_y][old_x] = 0
-    # print(i)
-    # print(j)
-    if old_y < 15 and old_y > 1 and old_x < 13 and old_x > 1:
-        if ah[i-1][j-1] == ah[i-1][j] == ah[i-1][j+1] == ah[i][j-1] == ah[i][j+1] ==\
-            ah[i+1][j-1] == ah[i+1][j] == ah[i+1][j+1] == ah[i][j] == 0:
-            return True
-        else:
-            return False
-    else:
+    if new_x > BREADTH - 1 or new_x < 1 or new_y > HEIGHT - 1 or new_y < 1:
         return False
 
-
-def change(ah, houses_list, house_id, new_x, new_y):
-    """
-    Verandert de positie van het huis en plot de nieuwe wijk
-    """
-
-    for house in houses_list:
+    neigh_sol = houses_list
+    for house in neigh_sol:
         if house['id'] == house_id:
-            old_y = house['y']
-            old_x = house['x']
-            if check_surr(ah, new_y, new_x, house_id, old_y, old_x):
-                ah[house['y']][house['x']] = 0
-                ah[int(new_y)][int(new_x)] = house['id']
-                house['x'] = int(new_x)
-                house['y'] = int(new_y)
-                # print("VERANDERD!!!")
+            house['x'] = new_x
+            house['y'] = new_y
 
-    return ah, houses_list
+    neigh_sol = omlig_ruimte(neigh_sol)
+    for house in neigh_sol:
+        # print(house['id'])
+        if house['id'] == house_id:
+            print(f"ID: {house_id}")
+            print(f"OR: {house['o.r.']}")
+            if house['o.r.'] > 1:
+                return True
+            else:
+                return False
 
 
 def omlig_ruimte(houses):
@@ -146,8 +109,8 @@ def omlig_ruimte(houses):
     Bepaalt de hoeveelheid omliggende ruimte en voegt toe aan de huizen dict
     """
 
+    olr = BREADTH*HEIGHT
     for house in houses:
-        olr = 24
         x1 = house['x']
         y1 = house['y']
         id = house['id']
@@ -159,9 +122,20 @@ def omlig_ruimte(houses):
                 y2 = other_house['y']
                 dist = sqrt((pow((x2-x1), 2) + pow((y2-y1), 2)))
 
-                # seeks the lowest distance, round to whole meters (-1 bc of mandatory space)
+                # seeks the lowest distance
                 if dist < olr:
-                    olr = int(dist) - 1
+                    olr = int(dist)
+
+        #check distance to border, if smaller than current olr, change
+        dist_to_border = 0.5*BREADTH
+        if x1 < olr:
+            olr = x1
+        elif y1 < olr:
+            olr = y1
+        elif BREADTH - x1 < olr:
+            olr = BREADTH - x1
+        elif HEIGHT - y1 < olr:
+            olr = HEIGHT - y1
 
         # save surrounding space to the dictionary houses
         house['o.r.'] = olr
@@ -172,45 +146,55 @@ def omlig_ruimte(houses):
 if __name__ == "__main__":
 
     # initieer wijk, plot , visualiseer en geef waarde aan huizen en wijk
-    Amstelhaege, houses_list = init(HOUSES_NUMBER, BREADTH, HEIGHT)
+    houses_list = init(HOUSES_NUMBER, BREADTH, HEIGHT)
     houses_list = omlig_ruimte(houses_list)
     houses_list, curr_waarde = waarde(houses_list)
-    plot(Amstelhaege, houses_list)
-    # print(f"Waarde wijk: {curr_waarde}")
+    print(f"Waarde wijk: {curr_waarde}")
     best_worth = curr_waarde
     vis.grid(houses_list)
-    print(Amstelhaege)
 
     # verander random positie huis annealing en plot
     done_iterations = 0
     waardes = []
-    while done_iterations <= ITERATIONS:
-        buur_Amstelhaege, buur_houses_list = random_replace(Amstelhaege, HOUSES_NUMBER, houses_list)
-        plot(buur_Amstelhaege, buur_houses_list)
+    temp = []
+    chance = []
+    xen = []
+    nenc = []
+
+    while done_iterations < ITERATIONS:
+        buur_houses_list = random_replace(HOUSES_NUMBER, houses_list)
         buur_houses_list = omlig_ruimte(buur_houses_list)
         buur_houses_list, buur_waarde = waarde(buur_houses_list)
 
-        done_iterations = done_iterations + 1
-
         # doorsturen naar SA.py
         # print(buur_waarde)
+        temp.append(SA.calc_temp(done_iterations, ITERATIONS))
+        if curr_waarde > buur_waarde:
+            chance.append(math.e ** ((buur_waarde-curr_waarde)/SA.calc_temp(done_iterations, ITERATIONS)))
+            xen.append((buur_waarde-curr_waarde)/SA.calc_temp(done_iterations, ITERATIONS))
+            nenc.append(buur_waarde-curr_waarde)
+            print(f"CURR: {curr_waarde}")
+            print(f"BUUR: {buur_waarde}")
+
         if SA.sim_an(curr_waarde, buur_waarde, done_iterations, best_worth, ITERATIONS):
-          Amstelhaege = buur_Amstelhaege
           houses_list = buur_houses_list
           curr_waarde = buur_waarde
           if best_worth < curr_waarde:
               best_worth = curr_waarde
 
         waardes.append(curr_waarde)
+        done_iterations = done_iterations + 1
         # print(waardes)
 
         print(f"Waarde wijk: {buur_waarde}")
         print(f"Done Iterations = {done_iterations}")
-    # print(houses_list)
+    print(houses_list)
     vis.linegraph(waardes)
     vis.grid(houses_list)
-    # print(Amstelhaege)
+    # vis.linegraph(temp)
+    # vis.linegraph(xen)
+    # vis.linegraph(nenc)
+    vis.SA(temp, chance, xen, nenc)
 
     # print(f"Done Iterations = {done_iterations}")
     # print(f"Waarde wijk: {curr_waarde}")
-    # plot(Amstelhaege, houses_list)
