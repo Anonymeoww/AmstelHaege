@@ -14,17 +14,18 @@ DONE
 
 TODO
 
+- Koppelen van code en datastructuur
+- Omgeving en huizen schalen naar echte map
+- In ``start.py`` de verschillende hoeveelheden huizen aanmaken en goede properties meegeven
+- Grafiek met aantal iteraties vs totale extra vrijstand (JA)
+- Onderzoek en implementatie koelschema (DJ)
+- Grid met verschillende typen geplaatste huizen (DJ)
+
 - Datastructuur
   - Methodes aan classes toevoegen (JA)
-- Splitsen van files (het meeste staat nu nog in wijk.py) (JA)
 - Statespace verkleinen (DJ + JS)
 - Code optimaliseren
   - Correcte berekening extra vrijstand (DJ)
-  - Onderzoek en implementatie koelschema (DJ)
-- Koppeling aanleggen tussen SA en Datastructuur (JA)
-- Visualisatie met Matplotlib
-  - grid met verschillende typen geplaatste huizen (DJ)
-  - grafiek met aantal iteraties vs totale extra vrijstand
 - Documentatie (JS)
   - Presentatie
   - Vastleggen en onderbouwen wat onze keuzes zijn mbt vrijstand en water
