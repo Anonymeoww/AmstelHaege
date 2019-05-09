@@ -12,12 +12,12 @@ def random_replace(houses_number, houses_list, BREADTH,HEIGHT):
 
     # bepaal nieuwe coordinaten:
     for house in houses_list:
-        if house['id'] == house_id:
-            new_x = house['x'] + ran.randint(-1, 1)
-            new_y = house['y'] + ran.randint(-1, 1)
+        if house.id == house_id:
+            new_x = house.x + ran.randint(-1, 1)
+            new_y = house.y + ran.randint(-1, 1)
             if helpers.check_surr(new_y, new_x, house_id, houses_list, BREADTH, HEIGHT):
-                house['x'] = new_x
-                house['y'] = new_y
+                house.x = new_x
+                house.y = new_y
                 print("VERANDERD!!!")
 
     return houses_list
