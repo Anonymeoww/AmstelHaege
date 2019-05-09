@@ -17,9 +17,9 @@ def grid(houses_list):
 
 
     for house in houses_list:
-        x.append(house["x"])
-        y.append(house["y"])
-        id.append(house['id'])
+        x.append(house.x)
+        y.append(house.y)
+        id.append(house.id)
     plt.figure()
     plt.axis([0, 18, 0, 16])
 

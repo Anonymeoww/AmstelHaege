@@ -8,9 +8,9 @@ def waarde(houses):
     print(houses)
     for house in houses:
         print(house)
-        olr = house['o.r.']
-        house['waarde'] = 610000*(1+0.01*(olr*6))
-        tot_value = tot_value + house['waarde']
+        olr = house.olr
+        house.worth = 610000*(1+0.01*(olr*6))
+        tot_value = tot_value + house.worth
 
     return houses, tot_value
 
@@ -24,17 +24,17 @@ def check_surr(new_y, new_x, house_id, houses_list, BREADTH, HEIGHT):
 
     neigh_sol = houses_list
     for house in neigh_sol:
-        if house['id'] == house_id:
-            house['x'] = new_x
-            house['y'] = new_y
+        if house.id == house_id:
+            house.x = new_x
+            house.y = new_y
 
     neigh_sol = omlig_ruimte(neigh_sol, BREADTH, HEIGHT)
     for house in neigh_sol:
         # print(house['id'])
-        if house['id'] == house_id:
-            print(f"ID: {house_id}")
-            print(f"OR: {house['o.r.']}")
-            if house['o.r.'] > 1:
+        if house.id == house_id:
+            # print(f"ID: {house_id}")
+            # print(f"OR: {house['o.r.']}")
+            if house.olr > 1:
                 return True
             else:
                 return False
@@ -46,15 +46,15 @@ def omlig_ruimte(houses, BREADTH, HEIGHT):
 
     olr = BREADTH*HEIGHT
     for house in houses:
-        x1 = house['x']
-        y1 = house['y']
-        id = house['id']
+        x1 = house.x
+        y1 = house.y
+        id = house.id
 
         for other_house in houses:
-            if not other_house['id'] == id:
+            if not other_house.id == id:
                 # print(f"ID_2: {house['id']}")
-                x2 = other_house['x']
-                y2 = other_house['y']
+                x2 = other_house.x
+                y2 = other_house.y
                 dist = sqrt((pow((x2-x1), 2) + pow((y2-y1), 2)))
 
                 # seeks the lowest distance
@@ -73,6 +73,6 @@ def omlig_ruimte(houses, BREADTH, HEIGHT):
             olr = HEIGHT - y1
 
         # save surrounding space to the dictionary houses
-        house['o.r.'] = olr
+        house.olr = olr
 
     return houses

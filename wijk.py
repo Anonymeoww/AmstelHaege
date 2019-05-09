@@ -71,5 +71,5 @@ if __name__ == "__main__":
     # vis.linegraph(nenc)
     vis.SA(temp, chance, xen, nenc)
 
-    # print(f"Done Iterations = {done_iterations}")
-    # print(f"Waarde wijk: {curr_waarde}")
+    print(f"Done Iterations = {done_iterations}")
+    print(f"Waarde wijk: {curr_waarde}")
