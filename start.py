@@ -5,7 +5,7 @@ from house import House
 
 def init(houses_number, n, m):
     """
-    Initialiseert de eerste random wijk
+    Initialiseert een random wijk
     """
     eensgezins = {'type':'eensgezinswoning', 'width': 8, 'depth': 8, 'worth': 285000}
     bungalow = {'type': 'bungalow', 'width': 10, 'depth': 7.5, 'worth': 399000}

@@ -1,16 +1,18 @@
 from math import sqrt
 
+
 def waarde(houses):
     """
     Bepaalt de waarde van de wijk
     """
     tot_value = 0
-    print(houses)
+
     for house in houses:
-        print(house)
+
         olr = house.olr
-        house.worth = 610000*(1+0.01*(olr*6))
-        tot_value = tot_value + house.worth
+
+        worth = house.worth * (1 + 0.01 * (olr * 6))
+        tot_value = tot_value + worth
 
     return houses, tot_value
 
@@ -50,18 +52,20 @@ def omlig_ruimte(houses, BREADTH, HEIGHT):
         y1 = house.y
         id = house.id
 
-        for other_house in houses:
-            if not other_house.id == id:
-                # print(f"ID_2: {house['id']}")
-                x2 = other_house.x
-                y2 = other_house.y
-                dist = sqrt((pow((x2-x1), 2) + pow((y2-y1), 2)))
+        if len(houses) > 1:
+            for other_house in houses:
+                if not other_house.id == id:
+                    # print(f"ID_2: {house['id']}")
+                    x2 = other_house.x
+                    y2 = other_house.y
+                    dist = sqrt((pow((x2-x1), 2) + pow((y2-y1), 2)))
 
-                # seeks the lowest distance
-                if dist < olr:
-                    olr = int(dist)
+                    # seeks the lowest distance
+                    if dist < olr:
+                        olr = int(dist)
 
         #check distance to border, if smaller than current olr, change
+
         dist_to_border = 0.5*BREADTH
         if x1 < olr:
             olr = x1
@@ -72,7 +76,9 @@ def omlig_ruimte(houses, BREADTH, HEIGHT):
         elif HEIGHT - y1 < olr:
             olr = HEIGHT - y1
 
-        # save surrounding space to the dictionary houses
+        # save surrounding space to the house object
         house.olr = olr
 
     return houses
+
+
