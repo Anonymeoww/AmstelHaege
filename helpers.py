@@ -27,15 +27,16 @@ def check_surr(new_y, new_x, house_id, houses_list, BREADTH, HEIGHT):
     neigh_sol = houses_list
     for house in neigh_sol:
         if house.id == house_id:
-            house.x = new_x
-            house.y = new_y
+            house.xmin = new_x
+            house.ymin = new_y
 
     neigh_sol = omlig_ruimte(neigh_sol, BREADTH, HEIGHT)
+    # print(neigh_sol)
     for house in neigh_sol:
-        # print(house['id'])
+        print(f"House.id: {house.id}")
+        print(f" house_id: {house_id}")
         if house.id == house_id:
-            # print(f"ID: {house_id}")
-            # print(f"OR: {house['o.r.']}")
+            print("AAAAAAAAAAAAa")
             if house.olr > 1:
                 return True
             else:
@@ -48,16 +49,17 @@ def omlig_ruimte(houses, BREADTH, HEIGHT):
 
     olr = BREADTH*HEIGHT
     for house in houses:
-        x1 = house.x
-        y1 = house.y
+        print(house.xmin)
+        x1 = house.xmin
+        y1 = house.ymin
         id = house.id
 
         if len(houses) > 1:
             for other_house in houses:
                 if not other_house.id == id:
                     # print(f"ID_2: {house['id']}")
-                    x2 = other_house.x
-                    y2 = other_house.y
+                    x2 = other_house.xmin
+                    y2 = other_house.ymin
                     dist = sqrt((pow((x2-x1), 2) + pow((y2-y1), 2)))
 
                     # seeks the lowest distance
@@ -65,6 +67,8 @@ def omlig_ruimte(houses, BREADTH, HEIGHT):
                         olr = int(dist)
 
         #check distance to border, if smaller than current olr, change
+
+        print(x1)
 
         dist_to_border = 0.5*BREADTH
         if x1 < olr:
@@ -80,5 +84,3 @@ def omlig_ruimte(houses, BREADTH, HEIGHT):
         house.olr = olr
 
     return houses
-
-

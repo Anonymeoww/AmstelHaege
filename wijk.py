@@ -18,7 +18,7 @@ BREADTH = 320
 HEIGHT = 360
 ITERATIONS = 1000
 startmethods = [start, start_greedy_fullwijk, start_greedy_perhouse]
-startmethod = startmethods[0]
+startmethod = startmethods[2]
 
 if __name__ == "__main__":
 
