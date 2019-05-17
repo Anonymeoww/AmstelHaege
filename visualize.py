@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
-import numpy as np
+import matplotlib.ticker as ticker
 
 def linegraph(list):
     plt.plot(list)
@@ -9,26 +9,28 @@ def linegraph(list):
     plt.show()
 
 def grid(houses_list, worth):
-
-    plt.figure()
+    fig, ax = plt.subplots()
     plt.title(worth)
     plt.axis([0, 320, 0, 360])
+    ax.set_facecolor('#DBFEB8')
+    ax.xaxis.set_major_locator(ticker.MultipleLocator(40))
+    ax.yaxis.set_major_locator(ticker.MultipleLocator(40))
 
-    # i = 0
     for house in houses_list:
         currentAxis = plt.gca()
         if house.type == 'eensgezinswoning':
-            color = 'blue'
+            color = '#A1ADB4'
         elif house.type == 'bungalow':
-            color = 'red'
+            color = '#C0A0C1'
         elif house.type == 'maison':
-            color = 'yellow'
-        outer_x = house.x - house.minvr
-        print(house.x)
-        print(outer_x)
-        currentAxis.add_patch(Rectangle((house.x, house.y), house.width, house.depth, color=color))
-        currentAxis.add_patch(Rectangle((house.x, house.y), house.width, house.depth, color=color))
-        currentAxis.annotate(house.id, (house.x, house.y))
+            color = '#FCB0B3'
+        outer_x = house.xmin - house.minvr
+        outer_y = house.ymin - house.minvr
+        currentAxis.add_patch(Rectangle((house.xmin, house.ymin), house.width, house.depth, color=color))
+        currentAxis.add_patch(Rectangle((outer_x, outer_y), house.width + 2*house.minvr, house.depth + 2*house.minvr, fill = False, color='black'))
+        currentAxis.annotate(house.id, (house.xmin + house.depth/2, house.ymin))
+        
+    plt.grid(linestyle="--")
     plt.show()
 
 def SA(temp, chance, xen, nenc):
