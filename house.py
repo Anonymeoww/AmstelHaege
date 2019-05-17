@@ -9,8 +9,10 @@ class House(object):
         """
         self.id = id
         self.type = type
-        self.x = x
-        self.y = y
+        self.xmax = xmax
+        self.xmin = xmin
+        self.ymax = ymax
+        self.ymin = ymin
         self.olr = olr
         self.width = width
         self.depth = depth
