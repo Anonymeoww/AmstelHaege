@@ -9,7 +9,7 @@ def linegraph(list):
     plt.show()
 
 
-def grid(houses_list):
+def grid(houses_list, worth):
 
     x = []
     y = []
@@ -21,7 +21,8 @@ def grid(houses_list):
         y.append(house.y)
         id.append(house.id)
     plt.figure()
-    plt.axis([0, 18, 0, 16])
+    plt.title(worth)
+    plt.axis([0, 16, 0, 18])
 
     i = 0
     for point in x:
