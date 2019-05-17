@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 import matplotlib.ticker as ticker
+import locale
 
 def linegraph(list):
     plt.plot(list)
@@ -9,8 +10,12 @@ def linegraph(list):
     plt.show()
 
 def grid(houses_list, worth):
+
+    locale.setlocale(locale.LC_ALL, '')
+    value = locale.currency(worth, grouping=True)
+
     fig, ax = plt.subplots()
-    plt.title(worth)
+    plt.title("Totale wijkwaarde: {}".format(value))
     plt.axis([0, 320, 0, 360])
     ax.set_facecolor('#DBFEB8')
     ax.xaxis.set_major_locator(ticker.MultipleLocator(40))
@@ -29,7 +34,7 @@ def grid(houses_list, worth):
         currentAxis.add_patch(Rectangle((house.xmin, house.ymin), house.width, house.depth, color=color))
         currentAxis.add_patch(Rectangle((outer_x, outer_y), house.width + 2*house.minvr, house.depth + 2*house.minvr, fill = False, color='black'))
         currentAxis.annotate(house.id, (house.xmin + house.depth/2, house.ymin))
-        
+
     plt.grid(linestyle="--")
     plt.show()
 
