@@ -8,18 +8,23 @@ def linegraph(list):
     plt.xlabel('Iteraties')
     plt.show()
 
-
 def grid(houses_list, worth):
 
     x = []
     y = []
     id = []
-
+    type = []
+    width = []
+    depth = []
 
     for house in houses_list:
         x.append(house.x)
         y.append(house.y)
         id.append(house.id)
+        type.append(house.type)
+        width.append(house.width)
+        depth.append(house.depth)
+        print(house.width)
     plt.figure()
     plt.title(worth)
     plt.axis([0, 16, 0, 18])
@@ -27,7 +32,13 @@ def grid(houses_list, worth):
     i = 0
     for point in x:
         currentAxis = plt.gca()
-        currentAxis.add_patch(Rectangle((x[i], y[i]), 0.5, 0.5))
+        if type[i] == 'eensgezinswoning':
+            color = 'blue'
+        elif type[i] == 'bungalow':
+            color = 'red'
+        elif type[i] == 'maison':
+            color = 'yellow'
+        currentAxis.add_patch(Rectangle((x[i], y[i]), width[i], depth[i], color=color))
         currentAxis.annotate(id[i], (x[i], y[i]))
         i=i+1
     plt.show()
