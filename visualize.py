@@ -10,37 +10,25 @@ def linegraph(list):
 
 def grid(houses_list, worth):
 
-    x = []
-    y = []
-    id = []
-    type = []
-    width = []
-    depth = []
-
-    for house in houses_list:
-        x.append(house.x)
-        y.append(house.y)
-        id.append(house.id)
-        type.append(house.type)
-        width.append(house.width)
-        depth.append(house.depth)
-        print(house.width)
     plt.figure()
     plt.title(worth)
-    plt.axis([0, 16, 0, 18])
+    plt.axis([0, 320, 0, 360])
 
-    i = 0
-    for point in x:
+    # i = 0
+    for house in houses_list:
         currentAxis = plt.gca()
-        if type[i] == 'eensgezinswoning':
+        if house.type == 'eensgezinswoning':
             color = 'blue'
-        elif type[i] == 'bungalow':
+        elif house.type == 'bungalow':
             color = 'red'
-        elif type[i] == 'maison':
+        elif house.type == 'maison':
             color = 'yellow'
-        currentAxis.add_patch(Rectangle((x[i], y[i]), width[i], depth[i], color=color))
-        currentAxis.annotate(id[i], (x[i], y[i]))
-        i=i+1
+        outer_x = house.x - house.minvr
+        print(house.x)
+        print(outer_x)
+        currentAxis.add_patch(Rectangle((house.x, house.y), house.width, house.depth, color=color))
+        currentAxis.add_patch(Rectangle((house.x, house.y), house.width, house.depth, color=color))
+        currentAxis.annotate(house.id, (house.x, house.y))
     plt.show()
 
 def SA(temp, chance, xen, nenc):
