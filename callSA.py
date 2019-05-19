@@ -1,6 +1,6 @@
 import SA
 
-def call_SA(HOUSES_NUMBER, houses_list, BREADTH, HEIGHT, curr_waarde, best_worth):
+def call_SA(HOUSES_NUMBER, ITERATIONS, houses_list, BREADTH, HEIGHT, curr_waarde, best_worth):
 
     # verander random positie huis annealing en plot
     done_iterations = 0

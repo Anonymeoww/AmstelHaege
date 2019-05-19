@@ -20,4 +20,4 @@ class House(object):
         self.worth = worth
 
     def __str__(self):
-        return f"{self.type} at {self.x},{self.y}"
+        return f"{self.id}: {self.type} at {self.xmin},{self.ymin}, olr: {self.olr}"
