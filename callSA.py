@@ -3,7 +3,7 @@ import helpers
 import math
 import visualize as vis
 
-def call_SA(HOUSES_NUMBER, ITERATIONS, houses_list, BREADTH, HEIGHT, curr_waarde, best_worth):
+def call_SA(HOUSES_NUMBER, ITERATIONS, houses_list, BREADTH, HEIGHT, current_worth, best_worth):
 
     # verander random positie huis annealing en plot
     done_iterations = 0
@@ -12,6 +12,7 @@ def call_SA(HOUSES_NUMBER, ITERATIONS, houses_list, BREADTH, HEIGHT, curr_waarde
     chance = []
     xen = []
     nenc = []
+    waardes.append(current_worth / 1000000)
 
     while done_iterations < ITERATIONS:
         buur_houses_list = helpers.random_replace(HOUSES_NUMBER, houses_list, BREADTH, HEIGHT)
@@ -24,33 +25,25 @@ def call_SA(HOUSES_NUMBER, ITERATIONS, houses_list, BREADTH, HEIGHT, curr_waarde
 
         # doorsturen naar SA.py
         temp.append(SA.calc_temp(done_iterations, ITERATIONS))
-        if curr_waarde > buur_waarde:
-            chance.append(math.e ** ((buur_waarde - curr_waarde) / SA.calc_temp(done_iterations, ITERATIONS)))
-            xen.append((buur_waarde - curr_waarde) / SA.calc_temp(done_iterations, ITERATIONS))
-            nenc.append(buur_waarde - curr_waarde)
-            # print(f"CURR: {curr_waarde}")
-            # print(f"BUUR: {buur_waarde}")
+        if current_worth > buur_waarde:
+            chance.append(math.e ** ((buur_waarde - current_worth) / SA.calc_temp(done_iterations, ITERATIONS)))
+            xen.append((buur_waarde - current_worth) / SA.calc_temp(done_iterations, ITERATIONS))
+            nenc.append(buur_waarde - current_worth)
 
-        if SA.sim_an(curr_waarde, buur_waarde, done_iterations, ITERATIONS):
-            # print("yoot")
+        if SA.sim_an(current_worth, buur_waarde, done_iterations, ITERATIONS):
             houses_list = buur_houses_list
-            curr_waarde = buur_waarde
-            if best_worth < curr_waarde:
-                best_worth = curr_waarde
+            current_worth = buur_waarde
+            if best_worth < current_worth:
+                best_worth = current_worth
 
-            waardes.append(curr_waarde / 1000000)
         done_iterations = done_iterations + 1
-        # print(waardes)
+        waardes.append(best_worth / 1000000)
 
-        # print(f"Waarde wijk: {buur_waarde}")
         print(f"Done Iterations = {done_iterations}")
     # print(houses_list)
-    iter = len(waardes)
-    vis.linegraph(iter, waardes)
+
+    vis.linegraph(done_iterations, waardes)
     vis.grid(houses_list, best_worth)
-    # vis.linegraph(temp)
-    # vis.linegraph(xen)
-    # vis.linegraph(nenc)
     vis.SA(temp, chance, xen, nenc)
 
     # print(f"Done Iterations = {done_iterations}")
