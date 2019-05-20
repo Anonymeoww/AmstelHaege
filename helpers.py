@@ -9,13 +9,34 @@ def waarde(houses_list):
     tot_value = 0
 
     for house in houses_list:
+        tot_value = tot_value + house.worth
 
-        olr = house.olr
+    return tot_value
 
-        worth = house.worth * (1 + 0.01 * (olr * 6))
-        tot_value = tot_value + worth
+def random_replace(houses_number, houses_list, BREADTH,HEIGHT):
+    """
+    verplaatst random een houses_list
+    """
 
-    return houses_list, tot_value
+    # selecteer een willekeurig huis
+    house_id = ran.randint(1, houses_number)
+
+    # bepaal nieuwe coordinaten:
+    for house in houses_list:
+        if house.id == house_id:
+            while True:
+                # print("yeet")
+                # randomly determine the direction of movement
+                x_change = ran.randint(-1, 1)
+                y_change = ran.randint(-1, 1)
+
+                house.xmin = house.xmin + x_change
+                house.xmax = house.xmax + x_change
+                house.ymin = house.ymin + y_change
+                house.ymax = house.ymax + y_change
+                if check_surr(house_id, houses_list, BREADTH, HEIGHT):
+                    # print("yeet")
+                    return houses_list
 
 def check_surr(house_id, houses_list, BREADTH, HEIGHT):
     """
@@ -30,14 +51,14 @@ def check_surr(house_id, houses_list, BREADTH, HEIGHT):
             house.ymin > HEIGHT - house.depth - house.minvr or house.ymin < house.minvr:
             return False
 
-    neigh_sol = omlig_ruimte(neigh_sol, house_id, BREADTH, HEIGHT)
+    neigh_sol = omlig_ruimte(neigh_sol, BREADTH, HEIGHT)
 
     for house in neigh_sol:
         if house.olr < house.minvr:
             return False
     return True
 
-def omlig_ruimte(houses_list, house_id, BREADTH, HEIGHT):
+def omlig_ruimte(houses_list, BREADTH, HEIGHT):
     """
     Bepaalt de hoeveelheid omliggende ruimte en voegt toe aan de huizen dict
     """

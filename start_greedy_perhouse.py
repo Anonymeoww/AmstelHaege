@@ -29,7 +29,7 @@ def init(houses_number, BREADTH, HEIGHT):
 
     numb_maison = numb_maison + 1
 
-    houses_list = helpers.omlig_ruimte(houses_list, house_id, BREADTH, HEIGHT)
+    houses_list = helpers.omlig_ruimte(houses_list, BREADTH, HEIGHT)
     houses_list, wijkwaarde = helpers.waarde(houses_list)
 
     temp_houses_list = houses_list
@@ -62,6 +62,7 @@ def init(houses_number, BREADTH, HEIGHT):
                 temphouse.ymax = ymax
                 temphouse.xmin = xmin
                 temphouse.xmax = xmax
+                temphouse.worth = temphouse.update_worth()
 
                 if helpers.check_surr(house_id, temp_houses_list, BREADTH, HEIGHT):
                     # print("yeet")
