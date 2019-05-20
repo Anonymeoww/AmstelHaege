@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 import matplotlib.ticker as ticker
+#  yeet
 import locale
 
 def linegraph(list):
