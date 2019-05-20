@@ -59,6 +59,7 @@ def init(houses_number, BREADTH, HEIGHT):
             while placed == False:
                 # print("yeet")
                 ymin, ymax, xmin, xmax = helpers.gen_quadr_coord(type['depth'], type['width'], type['minvr'], temp_houses_list)
+                print(f"YIII {temphouse.id, ymin, ymax, xmin, xmax}")
                 temphouse.ymin = ymin
                 temphouse.ymax = ymax
                 temphouse.xmin = xmin
@@ -66,7 +67,6 @@ def init(houses_number, BREADTH, HEIGHT):
                 temphouse.update_worth()
 
                 if helpers.check_surr(house_id, temp_houses_list, BREADTH, HEIGHT):
-                    # print("yeet")
                     placed = True
 
             new_worth = helpers.waarde(temp_houses_list)

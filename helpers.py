@@ -126,8 +126,8 @@ def gen_quadr_coord(depth, width, minvr, temp_houses_list):
 
     xminQ, xmaxQ, yminQ, ymaxQ = check_lowest_dens(temp_houses_list)
 
-    i = ran.randint(xminQ, (xmaxQ - minvr))
-    j = ran.randint(yminQ, (ymaxQ - depth - minvr))
+    i = ran.randint(yminQ, (ymaxQ - minvr))
+    j = ran.randint(xminQ, (xmaxQ - depth - minvr))
 
     ymin = i
     ymax = i + depth
@@ -155,21 +155,14 @@ def check_lowest_dens(temp_houses_list):
         elif house.xmin > 180 and house.ymin < 160:
             q4 += 1
 
-    print(q1, q2, q3, q4)
-
 
     if q1 < q2 and q1 < q3 and q1 < q4:
-        print("wooop")
         return 0, 180, 160, 320
     elif q2 < q1 and q2 < q3 and q2 < q4:
-        print("weeep")
         return 180, 360, 160, 320
     elif q3 < q2 and q3 < q1 and q3 < q4:
-        print("waaaap")
         return 0, 180, 0, 160
     elif q4 < q1 and q4 < q2 and q4 < q3:
-        print("yeet")
         return 180, 360, 0, 160
     else:
-        print("dit is de else")
         return 0, 360, 0, 320
