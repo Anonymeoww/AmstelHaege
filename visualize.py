@@ -4,10 +4,14 @@ import matplotlib.ticker as ticker
 #  yeet
 import locale
 
-def linegraph(list):
-    plt.plot(list)
+def linegraph(iter, list):
+
+    iterations = [item for item in range(0, iter)]
+    maxval = max(list)
+    plt.plot(iterations, list)
     plt.ylabel('Waarde')
     plt.xlabel('Iteraties')
+    plt.axis([0,iter,0,maxval+5])
     plt.show()
 
 def grid(houses_list, worth):
