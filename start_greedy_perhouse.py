@@ -4,7 +4,7 @@ import helpers
 import visualize
 from house import House
 
-def init(houses_number, n, m):
+def init(houses_number, BREADTH, HEIGHT):
     """
     Initialiseert een greedy wijk, plaatst PER HUIS de beste optie
     """
@@ -16,22 +16,20 @@ def init(houses_number, n, m):
     house_id = 1
 
     # randomly initiate first house
-    i = ran.randint(1, n)
-    j = ran.randint(1, (m - 5))
-
     numb_eensgezins = 0.6*houses_number
     numb_bungalow = 0.25*houses_number
     numb_maison = 0.15*houses_number
 
     # house = House(house_id, maison['type'], i, j, None, maison['width'], maison['depth'], maison['worth'])
     type = maison
-    i = ran.randint(1, n)
-    j = ran.randint(1, (m - 5))
-    house = House(house_id, type['type'], j, None, i, None, type['minvr'], None, type['width'], type['depth'], type['worth'])
-    numb_maison = numb_maison + 1
+    ymin, ymax, xmin, xmax = helpers.gen_rand_coord(BREADTH, HEIGHT, type['depth'], type['width'], type['minvr'])
+
+    house = House(house_id, type['type'], xmin, xmax, ymin, ymax, type['minvr'], None, type['width'], type['depth'], type['worth'])
     houses_list.append(house)
 
-    houses_list = helpers.omlig_ruimte(houses_list, n, m)
+    numb_maison = numb_maison + 1
+
+    houses_list = helpers.omlig_ruimte(houses_list, BREADTH, HEIGHT)
     houses_list, wijkwaarde = helpers.waarde(houses_list)
 
     temp_houses_list = houses_list
@@ -40,18 +38,17 @@ def init(houses_number, n, m):
     for number in range(houses_number - 1):
         house_id = number + 2
 
-        if numb_eensgezins > 0:
-            type = eensgezins
-            numb_eensgezins = numb_eensgezins - 1
+        if numb_maison > 0:
+            type = maison
+            numb_maison = numb_maison - 1
         elif numb_bungalow > 0:
             type = bungalow
             numb_bungalow = numb_bungalow - 1
-        elif numb_maison > 0:
-            type = maison
-            numb_maison = numb_maison - 1
+        elif numb_eensgezins > 0:
+            type = eensgezins
+            numb_eensgezins = numb_eensgezins - 1
 
-        temphouse = House(house_id, type['type'], None, None, None, None, type['minvr'], None, type['width'], type['depth'], type['worth'])
-        print(temphouse.id)
+        temphouse = house = House(house_id, type['type'], xmin, xmax, ymin, ymax, type['minvr'], None, type['width'], type['depth'], type['worth'])
         temp_houses_list.append(temphouse)
 
         tries = 0
@@ -59,18 +56,19 @@ def init(houses_number, n, m):
             placed = False
 
             while placed == False:
-                i = ran.randint(1, n)
-                j = ran.randint(1, (m - 5))
+                # print("yeet")
+                ymin, ymax, xmin, xmax = helpers.gen_rand_coord(BREADTH, HEIGHT, type['depth'], type['width'], type['minvr'])
+                temphouse.ymin = ymin
+                temphouse.ymax = ymax
+                temphouse.xmin = xmin
+                temphouse.xmax = xmax
+                temphouse.worth = temphouse.update_worth()
 
-                if helpers.check_surr(i, j, house_id, temp_houses_list, n, m):
-                    temphouse.ymin = i
-                    temphouse.ymax = i + temphouse.depth
-                    temphouse.xmin = j
-                    temphouse.xmax = j + temphouse.width
+                if helpers.check_surr(house_id, temp_houses_list, BREADTH, HEIGHT):
+                    # print("yeet")
                     placed = True
 
             temp_houses_list, new_worth = helpers.waarde(temp_houses_list)
-            # visualize.grid(temp_houses_list, new_worth)
 
             if new_worth > wijkwaarde:
                 wijkwaarde = new_worth

@@ -1,86 +1,123 @@
 from math import sqrt
+from house import House
+import random as ran
 
-
-def waarde(houses):
+def waarde(houses_list):
     """
     Bepaalt de waarde van de wijk
     """
     tot_value = 0
 
-    for house in houses:
+    for house in houses_list:
+        tot_value = tot_value + house.worth
 
-        olr = house.olr
+    return tot_value
 
-        worth = house.worth * (1 + 0.01 * (olr * 6))
-        tot_value = tot_value + worth
+def random_replace(houses_number, houses_list, BREADTH,HEIGHT):
+    """
+    verplaatst random een houses_list
+    """
 
-    return houses, tot_value
+    # selecteer een willekeurig huis
+    house_id = ran.randint(1, houses_number)
 
-def check_surr(new_y, new_x, house_id, houses_list, BREADTH, HEIGHT):
+    # bepaal nieuwe coordinaten:
+    for house in houses_list:
+        if house.id == house_id:
+            while True:
+                # print("yeet")
+                # randomly determine the direction of movement
+                x_change = ran.randint(-1, 1)
+                y_change = ran.randint(-1, 1)
+
+                house.xmin = house.xmin + x_change
+                house.xmax = house.xmax + x_change
+                house.ymin = house.ymin + y_change
+                house.ymax = house.ymax + y_change
+                if check_surr(house_id, houses_list, BREADTH, HEIGHT):
+                    # print("yeet")
+                    return houses_list
+
+def check_surr(house_id, houses_list, BREADTH, HEIGHT):
     """
     Checkt of het huis de juiste omliggende ruimte heeft
     """
 
-    if new_x > BREADTH - 1 or new_x < 1 or new_y > HEIGHT - 1 or new_y < 1:
-        return False
-
     neigh_sol = houses_list
+    numb_houses = len(houses_list)
     for house in neigh_sol:
-        if house.id == house_id:
-            house.xmin = new_x
-            house.ymin = new_y
+
+        if house.xmin > BREADTH - house.width - house.minvr or house.xmin < house.minvr or \
+            house.ymin > HEIGHT - house.depth - house.minvr or house.ymin < house.minvr:
+            return False
 
     neigh_sol = omlig_ruimte(neigh_sol, BREADTH, HEIGHT)
-    # print(neigh_sol)
-    for house in neigh_sol:
-        print(f"House.id: {house.id}")
-        print(f" house_id: {house_id}")
-        if house.id == house_id:
-            print("AAAAAAAAAAAAa")
-            if house.olr > 1:
-                return True
-            else:
-                return False
 
-def omlig_ruimte(houses, BREADTH, HEIGHT):
+    for house in neigh_sol:
+        if house.olr < house.minvr:
+            return False
+    return True
+
+def omlig_ruimte(houses_list, BREADTH, HEIGHT):
     """
     Bepaalt de hoeveelheid omliggende ruimte en voegt toe aan de huizen dict
     """
 
-    olr = BREADTH*HEIGHT
-    for house in houses:
-        print(house.xmin)
-        x1 = house.xmin
-        y1 = house.ymin
+    for house in houses_list:
+        house.olr = BREADTH*HEIGHT
+        x1min = house.xmin
+        x1max = house.xmax
+        y1min = house.ymin
+        y1max = house.ymax
         id = house.id
 
-        if len(houses) > 1:
-            for other_house in houses:
+        combinations = [[x1min, y1min], [x1min, y1max], [x1max, y1min], [x1max, y1max]]
+
+        if len(houses_list) > 1:
+            for other_house in houses_list:
                 if not other_house.id == id:
-                    # print(f"ID_2: {house['id']}")
-                    x2 = other_house.xmin
-                    y2 = other_house.ymin
-                    dist = sqrt((pow((x2-x1), 2) + pow((y2-y1), 2)))
+                    x2min = other_house.xmin
+                    x2max = other_house.xmax
+                    y2min = other_house.ymin
+                    y2max = other_house.ymax
 
-                    # seeks the lowest distance
-                    if dist < olr:
-                        olr = int(dist)
+                    other_combinations = [[x2min, y2min], [x2min, y2max], [x2max, y2min], [x2max, y2max]]
 
-        #check distance to border, if smaller than current olr, change
+                    for combination in combinations:
+                        for other_combination in other_combinations:
+                            dist = sqrt((pow((other_combination[0]-combination[0]), 2) + pow((other_combination[1]-combination[1]), 2)))
 
-        print(x1)
+                            # seeks the lowest distance
+                            if house.olr > dist:
+                                house.olr = dist
 
-        dist_to_border = 0.5*BREADTH
-        if x1 < olr:
-            olr = x1
-        elif y1 < olr:
-            olr = y1
-        elif BREADTH - x1 < olr:
-            olr = BREADTH - x1
-        elif HEIGHT - y1 < olr:
-            olr = HEIGHT - y1
+                    # check if houses do not overlap
+                    for other_combination in other_combinations:
+                        if other_combination[0] >= x1min + house.minvr and other_combination[0] <= x1max + house.minvr and \
+                        other_combination[1] >= y1min + house.minvr and other_combination[1] <= y1max + house.minvr:
+                            house.olr = 0
+                            break
 
-        # save surrounding space to the house object
-        house.olr = olr
+            #check distance to border, if smaller than current olr, change
+            if x1min < house.olr:
+                house.olr = x1min
+            elif y1min < house.olr:
+                house.olr = y1min
+            elif BREADTH - x1max < house.olr:
+                house.olr = BREADTH - x1max
+            elif HEIGHT - y1max < house.olr:
+                house.olr = HEIGHT - y1max
 
-    return houses
+    return houses_list
+
+def gen_rand_coord(BREADTH, HEIGHT, depth, width, minvr):
+
+    i = ran.randint(1, (HEIGHT - width - minvr))
+    j = ran.randint(1, (BREADTH - depth - minvr))
+    ymin = i
+    ymax = i + depth
+    xmin = j
+    xmax = j + width
+
+
+    return ymin, ymax, xmin, xmax
