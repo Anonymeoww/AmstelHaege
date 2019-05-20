@@ -6,12 +6,12 @@ import locale
 
 def linegraph(iter, list):
 
-    iterations = [item for item in range(0, iter)]
+    iterations = [item for item in range(0, iter+1)]
     maxval = max(list)
     plt.plot(iterations, list)
     plt.ylabel('Waarde x 1.000.000')
     plt.xlabel('Iteraties')
-    plt.axis([0,iter,0,maxval+5])
+    plt.axis([0,iter,7,maxval+3])
     plt.show()
 
 def grid(houses_list, worth):
