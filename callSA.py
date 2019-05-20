@@ -31,21 +31,22 @@ def call_SA(HOUSES_NUMBER, ITERATIONS, houses_list, BREADTH, HEIGHT, curr_waarde
             # print(f"CURR: {curr_waarde}")
             # print(f"BUUR: {buur_waarde}")
 
-        if SA.sim_an(curr_waarde, buur_waarde, done_iterations, best_worth, ITERATIONS, BREADTH, HEIGHT):
+        if SA.sim_an(curr_waarde, buur_waarde, done_iterations, ITERATIONS):
             # print("yoot")
             houses_list = buur_houses_list
             curr_waarde = buur_waarde
             if best_worth < curr_waarde:
                 best_worth = curr_waarde
 
-            waardes.append(curr_waarde)
+            waardes.append(curr_waarde / 1000000)
         done_iterations = done_iterations + 1
         # print(waardes)
 
         # print(f"Waarde wijk: {buur_waarde}")
         print(f"Done Iterations = {done_iterations}")
-    print(houses_list)
-    vis.linegraph(waardes)
+    # print(houses_list)
+    iter = len(waardes)
+    vis.linegraph(iter, waardes)
     vis.grid(houses_list, best_worth)
     # vis.linegraph(temp)
     # vis.linegraph(xen)

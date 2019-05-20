@@ -9,7 +9,7 @@ def linegraph(iter, list):
     iterations = [item for item in range(0, iter)]
     maxval = max(list)
     plt.plot(iterations, list)
-    plt.ylabel('Waarde')
+    plt.ylabel('Waarde x 1.000.000')
     plt.xlabel('Iteraties')
     plt.axis([0,iter,0,maxval+5])
     plt.show()
