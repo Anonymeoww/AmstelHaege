@@ -19,8 +19,8 @@ def calc_temp(done_iterations, iterations):
     """
     calculate temperature for current solution, scheme must be updated for viable solutions
     """
-    max_temp = 500000
-    min_temp = 20000
+    max_temp = 50000
+    min_temp = 5000
     temperature = max_temp * (min_temp/max_temp) ** (done_iterations/iterations)
     # print(temperature)
 
