@@ -15,9 +15,9 @@ Hier komt een tekst te staan
 HOUSES_NUMBER = 60
 BREADTH = 320
 HEIGHT = 360
-ITERATIONS = 500
+ITERATIONS = 1000
 startmethods = [start, start_greedy_fullwijk, start_greedy_perhouse, start_greedy_wijkquadrants]
-startmethod = startmethods[3]
+startmethod = startmethods[0]
 
 if __name__ == "__main__":
 
@@ -25,6 +25,8 @@ if __name__ == "__main__":
     print("Initiate AmstelHaege...")
     houses_list = startmethod.init(HOUSES_NUMBER, BREADTH, HEIGHT)
     houses_list = helpers.omlig_ruimte(houses_list, BREADTH, HEIGHT)
+    for house in houses_list:
+        house.update_worth()
     current_worth = helpers.waarde(houses_list)
     best_worth = current_worth
     vis.grid(houses_list, best_worth)
@@ -33,4 +35,4 @@ if __name__ == "__main__":
     # HC.call_HC(ITERATIONS, HOUSES_NUMBER, houses_list, BREADTH, HEIGHT, current_worth, best_worth)
 
     print("Running Simulated Annealing..")
-    # callSA.call_SA(HOUSES_NUMBER, ITERATIONS, houses_list, BREADTH, HEIGHT, current_worth, best_worth)
+    callSA.call_SA(HOUSES_NUMBER, ITERATIONS, houses_list, BREADTH, HEIGHT, current_worth, best_worth)
