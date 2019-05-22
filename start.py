@@ -7,6 +7,10 @@ def init(houses_number, BREADTH, HEIGHT):
     """
     Initialiseert een random wijk
     """
+
+    # first, randomly place water
+    water_list = helpers.gen_water(BREADTH, HEIGHT)
+
     eensgezins = {'type':'eensgezinswoning', 'width': 16, 'depth': 16, 'base_worth': 285000, 'minvr': 4, 'extra': 3}
     bungalow = {'type': 'bungalow', 'width': 20, 'depth': 15, 'base_worth': 399000, 'minvr': 6, 'extra': 4}
     maison = {'type': 'maison', 'width': 22, 'depth': 21, 'base_worth': 610000, 'minvr': 12, 'extra': 6}
@@ -32,21 +36,17 @@ def init(houses_number, BREADTH, HEIGHT):
         ymin, ymax, xmin, xmax = helpers.gen_rand_coord(BREADTH, HEIGHT, type['depth'], type['width'], type['minvr'])
 
         house = House(house_id, type['type'], xmin, xmax, ymin, ymax, type['minvr'], 0, type['width'], type['depth'], type['extra'], type['base_worth'], type['base_worth'])
-        # print(f"ID: {house.id}, TYPE: {house.type}, WORTH: {house.worth}")
-
-        # self, id, type, xmin, xmax, ymin, ymax, minvr, olr, width, depth, extra, base_worth, worth
         houses_list.append(house)
 
-        while helpers.check_surr(house_id, houses_list, BREADTH, HEIGHT) == False:
+        while helpers.check_surr(house_id, water_list, houses_list, BREADTH, HEIGHT) == False:
             ymin, ymax, xmin, xmax = helpers.gen_rand_coord(BREADTH, HEIGHT, type['depth'], type['width'], type['minvr'])
             house.ymin = ymin
             house.ymax = ymax
             house.xmin = xmin
             house.xmax = xmax
             house.update_worth()
-            # print(house.worth)
 
         placed = True
         house_id = house_id + 1
 
-    return houses_list
+    return water_list, houses_list

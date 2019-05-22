@@ -1,5 +1,6 @@
 from math import sqrt
 from house import House
+from water import Water
 import random as ran
 
 def waarde(houses_list):
@@ -14,7 +15,7 @@ def waarde(houses_list):
 
     return tot_value
 
-def random_replace(houses_number, houses_list, BREADTH,HEIGHT):
+def random_replace(houses_number, water_list, houses_list, BREADTH, HEIGHT):
     """
     verplaatst random een houses_list
     """
@@ -35,11 +36,10 @@ def random_replace(houses_number, houses_list, BREADTH,HEIGHT):
                 house.xmax = house.xmax + x_change
                 house.ymin = house.ymin + y_change
                 house.ymax = house.ymax + y_change
-                if check_surr(house_id, houses_list, BREADTH, HEIGHT):
-                    # print("yeet")
+                if check_surr(house_id, water_list, houses_list, BREADTH, HEIGHT):
                     return houses_list
 
-def check_surr(house_id, houses_list, BREADTH, HEIGHT):
+def check_surr(house_id, water_list, houses_list, BREADTH, HEIGHT):
     """
     Checkt of het huis de juiste omliggende ruimte heeft
     """
@@ -48,18 +48,19 @@ def check_surr(house_id, houses_list, BREADTH, HEIGHT):
     numb_houses = len(houses_list)
     for house in neigh_sol:
 
+        # check if house is placed too close to the edge
         if house.xmin > BREADTH - house.width - house.minvr or house.xmin < house.minvr or \
             house.ymin > HEIGHT - house.depth - house.minvr or house.ymin < house.minvr:
             return False
 
-    neigh_sol = omlig_ruimte(neigh_sol, BREADTH, HEIGHT)
+    neigh_sol = omlig_ruimte(water_list, neigh_sol, BREADTH, HEIGHT)
 
     for house in neigh_sol:
         if house.olr < house.minvr:
             return False
     return True
 
-def omlig_ruimte(houses_list, BREADTH, HEIGHT):
+def omlig_ruimte(water_list, houses_list, BREADTH, HEIGHT):
     """
     Bepaalt de hoeveelheid omliggende ruimte en voegt toe aan de huizen dict
     """
@@ -72,8 +73,27 @@ def omlig_ruimte(houses_list, BREADTH, HEIGHT):
         y1max = house.ymax
         id = house.id
 
+        house_coords = [x1min, x1max, y1min, y1max]
         combinations = [[x1min, y1min], [x1min, y1max], [x1max, y1min], [x1max, y1max]]
 
+        # check if house is placed in water
+        for water in water_list:
+            water_xmin = water.xmin
+            water_xmax = water.xmax
+            water_ymin = water.ymin
+            water_ymax = water.ymax
+
+            water_combinations = [[water_xmin, water_ymin], [water_xmin, water_ymax], [water_xmax, water_ymin], [water_xmax, water_ymax]]
+
+            # check if houses does not overlap water
+            for combination in combinations:
+                if combination[0] >= water_xmin and combination[0] <= water_xmax and \
+                    combination[1] >= water_ymin and combination[1] <= water_ymax:
+                    house.olr = 0
+                    break
+
+
+        # check if house is placed too close or on top op another house
         if len(houses_list) > 1:
             for other_house in houses_list:
                 if not other_house.id == id:
@@ -84,20 +104,22 @@ def omlig_ruimte(houses_list, BREADTH, HEIGHT):
 
                     other_combinations = [[x2min, y2min], [x2min, y2max], [x2max, y2min], [x2max, y2max]]
 
-                    for combination in combinations:
-                        for other_combination in other_combinations:
-                            dist = sqrt((pow((other_combination[0]-combination[0]), 2) + pow((other_combination[1]-combination[1]), 2)))
+                    house = pythagoras(combinations, other_combinations, house_coords, house)
 
-                            # seeks the lowest distance
-                            if house.olr > dist:
-                                house.olr = dist
-
-                    # check if houses do not overlap
-                    for other_combination in other_combinations:
-                        if other_combination[0] >= x1min + house.minvr and other_combination[0] <= x1max + house.minvr and \
-                        other_combination[1] >= y1min + house.minvr and other_combination[1] <= y1max + house.minvr:
-                            house.olr = 0
-                            break
+                    # for combination in combinations:
+                    #     for other_combination in other_combinations:
+                    #         dist = sqrt((pow((other_combination[0]-combination[0]), 2) + pow((other_combination[1]-combination[1]), 2)))
+                    #
+                    #         # seeks the lowest distance
+                    #         if house.olr > dist:
+                    #             house.olr = dist
+                    #
+                    # # check if houses do not overlap
+                    # for other_combination in other_combinations:
+                    #     if other_combination[0] >= x1min + house.minvr and other_combination[0] <= x1max + house.minvr and \
+                    #     other_combination[1] >= y1min + house.minvr and other_combination[1] <= y1max + house.minvr:
+                    #         house.olr = 0
+                    #         break
 
             #check distance to border, if smaller than current olr, change
             if x1min < house.olr:
@@ -109,7 +131,59 @@ def omlig_ruimte(houses_list, BREADTH, HEIGHT):
             elif HEIGHT - y1max < house.olr:
                 house.olr = HEIGHT - y1max
 
+            # print(house.olr)
+
     return houses_list
+
+def pythagoras(combinations, other_combinations, house_coords, house):
+    """
+    This function calculates the distance to other houses and checks if houses do not overlap
+    """
+    for combination in combinations:
+        for other_combination in other_combinations:
+            dist = sqrt((pow((other_combination[0]-combination[0]), 2) + pow((other_combination[1]-combination[1]), 2)))
+
+            # seeks the lowest distance
+            if house.olr > dist:
+                house.olr = dist
+
+    # check if houses do not overlap
+    for other_combination in other_combinations:
+        # print(other_combination)
+        if other_combination[0] >= house_coords[0] + house.minvr and other_combination[0] <= house_coords[1] + house.minvr and \
+        other_combination[1] >= house_coords[2] + house.minvr and other_combination[1] <= house_coords[3] + house.minvr:
+            # print("YEEEEEEEt")
+            house.olr = 0
+            break
+
+    return house
+
+def gen_water(BREADTH, HEIGHT):
+
+    houses_list = []
+    water_list = []
+    water_id = 1
+    water_depth = 80
+    water_width = 80
+
+    while len(water_list) < 4:
+
+        ymin, ymax, xmin, xmax = gen_rand_coord(BREADTH, HEIGHT, water_depth, water_width, 4)
+        water = Water(water_id, xmin, xmax, ymin, ymax, water_width, water_depth, 4)
+        water_list.append(water)
+
+        while check_surr(water_id, houses_list, water_list, BREADTH, HEIGHT) == False:
+            # print("yeet")
+            ymin, ymax, xmin, xmax = gen_rand_coord(BREADTH, HEIGHT, water_depth, water_width, 4)
+            water.ymin = ymin
+            water.ymax = ymax
+            water.xmin = xmin
+            water.xmax = xmax
+
+        water_id = water_id + 1
+
+    print(water_list)
+    return water_list
 
 def gen_rand_coord(BREADTH, HEIGHT, depth, width, minvr):
 

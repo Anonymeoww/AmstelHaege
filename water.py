@@ -3,7 +3,7 @@ class Water(object):
     Representation of a water element in AmstelHaege
     """
 
-    def __init__(self, id, xmin, xmax, ymin, ymax, width, depth):
+    def __init__(self, id, xmin, xmax, ymin, ymax, width, depth, minvr):
         """
         Initializes a House
         """
@@ -14,3 +14,4 @@ class Water(object):
         self.ymin = ymin
         self.width = width
         self.depth = depth
+        self.minvr = minvr

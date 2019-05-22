@@ -15,7 +15,7 @@ def linegraph(iter, list):
     plt.axis([0, iter, minval - 0.5, maxval + 0.5])
     plt.show()
 
-def grid(houses_list, worth):
+def grid(water_list, houses_list, worth):
 
     locale.setlocale(locale.LC_ALL, '')
     value = locale.currency(worth, grouping=True)
@@ -26,6 +26,14 @@ def grid(houses_list, worth):
     ax.set_facecolor('#DBFEB8')
     ax.xaxis.set_major_locator(ticker.MultipleLocator(40))
     ax.yaxis.set_major_locator(ticker.MultipleLocator(40))
+
+    for water in water_list:
+        currentAxis = plt.gca()
+        color = '#4286f4'
+        outer_x = water.xmin - water.minvr
+        outer_y = water.ymin - water.minvr
+        currentAxis.add_patch(Rectangle((water.xmin, water.ymin), water.width, water.depth, color=color))
+        currentAxis.annotate(water.id, (water.xmin + water.depth/2, water.ymin))
 
     for house in houses_list:
         currentAxis = plt.gca()
