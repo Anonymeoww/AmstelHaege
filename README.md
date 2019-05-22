@@ -1,26 +1,33 @@
 # AmstelHaege
 
 De ``README`` bevat momenteel een overzicht van de voortgang van het project.
-Dit bestaat uit de (deels) voltooide onderdelen en een ``TODO`` lijst.
 De presentatie van onze voortgang is [hier](https://docs.google.com/presentation/d/1Xsbzy8JWZoew0-4Yi2nRrNSVSLT0Bn7Ct1rIfck4xow/edit?usp=sharing) te vinden.
-
-DONE
-
-- [x] Datastructuur met alle classes die nodig zijn
-- [x] Algoritmes Simulated Annealing ('SA') en Greedy
-- [x] Visualisatie: een plattegrond in matplotlib.
-- [x] Grafiek met waarde vs. aantal iteraties
-- [x] Eindpresentatie inleiding
 
 TODO
 
-- [ ] Overal nieuwe grafieken in presentatie
-- [ ] Grafiek met aantal iteraties vs totale extra vrijstand (JA)
+Code:
+- [ ] Implementatie Water
 - [ ] Implementatie verschillende koelschema's (DJ)
 - [ ] Resultaten van vergelijkingen algoritmes
-- [ ] Implementatie Water
-- [ ] Statespace verkleinen? (DJ + JA)
-- [ ] Correcte berekening extra vrijstand (DJ)
+- [ ] Commentaar toevoegen en controleren in alle files --> alles in Engels
+- [ ] Oplossingen opslaan als objecten (wijken.py)
+- [ ] Requirements.txt
+- [ ] README.txt opstellen (JS)
+- [ ] Gebruiksvriendelijk code runnen
+- [ ] Code efficienter maken indien mogelijk
+- [ ] Grafiek met aantal iteraties vs totale extra vrijstand (JA)
+- [ ] Zijn er herkenbare patronen in 'goede' oplossingen?
 
-- Optioneel
-  - [ ] Fancy plattegrond (JS)
+
+Presentatie:
+- [ ] Opschrijven wat er wordt verteld
+- [ ] Slides toevoegen
+- [ ] Overal nieuwe grafieken in presentatie
+
+* Inleiding
+* Oplossingsruimte
+* Methoden
+* Reultaten en vergelijking
+* Conclusie
+* Discussie
+
