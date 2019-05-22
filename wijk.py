@@ -12,12 +12,13 @@ import start_greedy_wijkquadrants
 Hier komt een tekst te staan
 """
 
-HOUSES_NUMBER = 60
+HOUSES_NUMBER = 20
 BREADTH = 320
 HEIGHT = 360
+HILL_ITERATIONS = 500
 ITERATIONS = 1000
 startmethods = [start, start_greedy_fullwijk, start_greedy_perhouse, start_greedy_wijkquadrants]
-startmethod = startmethods[0]
+startmethod = startmethods[2]
 
 if __name__ == "__main__":
 
@@ -28,11 +29,20 @@ if __name__ == "__main__":
     for house in houses_list:
         house.update_worth()
     current_worth = helpers.waarde(houses_list)
-    best_worth = current_worth
-    vis.grid(houses_list, best_worth)
+    init_worth = current_worth
+    # best_worth = current_worth
+    vis.grid(houses_list, current_worth)
 
+    # for i in range (3):
     print("Running HillClimber..")
-    # HC.call_HC(ITERATIONS, HOUSES_NUMBER, houses_list, BREADTH, HEIGHT, current_worth, best_worth)
+    houses_list = HC.call_HC(HILL_ITERATIONS, HOUSES_NUMBER, houses_list, BREADTH, HEIGHT, current_worth)
+
+    current_worth = helpers.waarde(houses_list)
 
     print("Running Simulated Annealing..")
-    callSA.call_SA(HOUSES_NUMBER, ITERATIONS, houses_list, BREADTH, HEIGHT, current_worth, best_worth)
+    houses_list = callSA.call_SA(HOUSES_NUMBER, ITERATIONS, houses_list, BREADTH, HEIGHT, current_worth)
+
+    current_worth = helpers.waarde(houses_list)
+
+    vis.grid(houses_list, current_worth)
+    print(f"Change from {init_worth} to {current_worth}")

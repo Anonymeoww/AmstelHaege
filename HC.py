@@ -1,10 +1,11 @@
 import helpers
 import visualize as vis
 
-def call_HC(ITERATIONS, HOUSES_NUMBER, houses_list, BREADTH, HEIGHT, current_worth, best_worth):
+def call_HC(ITERATIONS, HOUSES_NUMBER, houses_list, BREADTH, HEIGHT, current_worth):
     done_iterations = 0
     waardes = []
     waardes.append(current_worth/1000000)
+    best_worth = current_worth
 
     while done_iterations < ITERATIONS:
         buur_houses_list = helpers.random_replace(HOUSES_NUMBER, houses_list, BREADTH, HEIGHT)
@@ -21,9 +22,12 @@ def call_HC(ITERATIONS, HOUSES_NUMBER, houses_list, BREADTH, HEIGHT, current_wor
                 best_worth = current_worth
         done_iterations = done_iterations + 1
         waardes.append(best_worth / 1000000)
-        print(done_iterations)
+        # print(done_iterations)
     # wijk_id = 1
     # wijk = Wijk(wijk_id, current_worth, HOUSES_NUMBER, houses_list)
     # print(wijk)
-    vis.linegraph(done_iterations, waardes)
-    vis.grid(houses_list, current_worth)
+
+    # vis.linegraph(done_iterations, waardes)
+    # vis.grid(houses_list, current_worth)
+
+    return houses_list

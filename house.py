@@ -22,7 +22,7 @@ class House(object):
         self.worth = worth
 
     def update_worth(self):
-        self.worth = self.base_worth * (1 + 0.01 * (self.olr * self.extra))
+        self.worth = self.base_worth * (1 + 0.01 * (int(self.olr / 2) * self.extra))
 
     def __str__(self):
         return f"{self.id}: {self.type} at {self.xmin},{self.ymin}, olr: {self.olr}"

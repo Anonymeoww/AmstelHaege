@@ -10,6 +10,7 @@ def waarde(houses_list):
 
     for house in houses_list:
         tot_value = tot_value + house.worth
+        house.update_worth()
 
     return tot_value
 
