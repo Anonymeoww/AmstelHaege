@@ -16,9 +16,11 @@ def call(ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, cu
     waardes.append(current_worth / 1000000)
 
     while done_iterations < ITERATIONS:
-        buur_houses_list = helpers.random_replace(HOUSES_NUMBER, houses_list, BREADTH, HEIGHT)
+        buur_houses_list = helpers.random_replace(HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT)
+        # for house in buur_houses_list:
+        #     print(house.olr)
         # DIT GEBEURT NU DUBBEL, KAN MSS OOK IN EEN KEER
-        buur_houses_list = helpers.omlig_ruimte(buur_houses_list, BREADTH, HEIGHT)
+        # buur_houses_list = helpers.omlig_ruimte(water_list, buur_houses_list, BREADTH, HEIGHT)
         for house in buur_houses_list:
             house.update_worth()
 
@@ -32,7 +34,7 @@ def call(ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, cu
             xen.append(nc / calc_temp(done_iterations, ITERATIONS))
             nenc.append(nc)
 
-        if SA.sim_an(current_worth, buur_waarde, done_iterations, ITERATIONS):
+        if sim_an(current_worth, buur_waarde, done_iterations, ITERATIONS):
             houses_list = buur_houses_list
             current_worth = buur_waarde
             if best_worth < current_worth:
@@ -45,10 +47,10 @@ def call(ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, cu
     # print(houses_list)
 
     # vis.linegraph(done_iterations, waardes)
-    # vis.grid(houses_list, best_worth)
     # vis.SA(temp, chance, xen, nenc)
+    # vis.grid(houses_list, best_worth)
 
-    return houses_list
+    return waardes, houses_list
 
     # print(f"Done Iterations = {done_iterations}")
     # print(f"Waarde wijk: {curr_waarde}")
@@ -82,8 +84,7 @@ def calc_temp(done_iterations, iterations):
 
 def sim_an(current_worth, next_worth, done_iterations, iterations):
 
-    #als de buur beter is dan huidig, dan buur accepteren
-
+    # als de buur beter is dan huidig, dan buur accepteren
     if next_worth > current_worth:
         return True
 
