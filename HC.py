@@ -1,7 +1,7 @@
 import helpers
 import visualize as vis
 
-def call_HC(ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, current_worth):
+def call(ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, current_worth):
     done_iterations = 0
     waardes = []
     waardes.append(current_worth/1000000)
