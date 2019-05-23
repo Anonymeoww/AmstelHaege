@@ -20,17 +20,19 @@ if __name__ == "__main__":
     """
     Ask user for methods, and create AmstelHaege
     """
+    print("Welcome to the AmstelHaege generator. Please choose the amount of houses (20, 40 or 60) and the method"
+          "for generating the first neighbourhood. For more information on the methods and algorithms please look at "
+          "the README.\n")
+
     HOUSES_NUMBER = int(input("Size (20, 40, 60): "))
+    while (HOUSES_NUMBER != 20):
+        print("Please choose between 20, 40 or 60 houses.")
+        HOUSES_NUMBER = int(input("Size (20, 40, 60): "))
+
+    print("1: Random \n 2: Greedy fullwijk \n 3: Greedy per house \n 4: Greedy quadrants")
     start = int(input("Startmethod: "))
     startmethod = startmethods[start-1]
-    if start == 1:
-        smethod = 'Random algorithm'
-    elif start == 2:
-        smethod = 'Greedy fullwijk algorithm'
-    elif start == 3:
-        smethod = 'Greedy per house algorithm'
-    elif start == 4:
-        smethod = 'Greedy quadrant algorithm'
+    smethod = helpers.get_start(start)
 
     ITERATIONS = int(input("Iterations: "))
 
@@ -47,16 +49,14 @@ if __name__ == "__main__":
 
     solve = int(input("Solvemethod: "))
     solvemethod = solvemethods[solve-1]
+    solmethod = helpers.get_solve(solve)
 
-    if solvemethod == 1:
-        solmethod = 'Hillclimber algorithm'
-    elif solvemethod == 2:
-        solmethod = 'Simulated Annealing algorithm'
+    ITERATIONS2 = int(input("Iterations: "))
 
-    #print("Running {}...".format(solmethod))
+    print("Running {}...".format(solmethod))
 
     # Optimize AmstelHaege
-    houses_list = solvemethod.call(ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, current_worth)
+    houses_list = solvemethod.call(ITERATIONS2, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, current_worth)
     current_worth = helpers.waarde(houses_list)
     wijk = Wijk(1, current_worth, HOUSES_NUMBER, houses_list)
     wijk_list.append(wijk)
