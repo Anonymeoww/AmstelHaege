@@ -11,6 +11,9 @@ import visualize as vis
 
 
 def mainstart(starter, HOUSES_NUMBER, BREADTH, HEIGHT):
+    """
+    Create start solution using method of user's choice
+    """
 
     startmethods = [start, start_greedy_fullwijk, start_greedy_perhouse, start_greedy_wijkquadrants]
     startmethod = startmethods[starter-1]
@@ -28,6 +31,9 @@ def mainstart(starter, HOUSES_NUMBER, BREADTH, HEIGHT):
 
 
 def mainsolve(solver, ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, current_worth):
+    """
+    Optimize the neighbourhood using a hillclimber and simulated annealing
+    """
 
     solvemethods = [HC, SA]
     solvemethod = solvemethods[solver - 1]
@@ -36,13 +42,16 @@ def mainsolve(solver, ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADT
     waardes, houses_list = solvemethod.call(ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, current_worth)
     current_worth = helpers.waarde(houses_list)
 
+    # visualize the result
     vis.grid(water_list, houses_list, current_worth)
-    # vis.SA(waardes)
 
     return waardes
 
 
 def get_start(start):
+    """
+     Format start method for user input
+    """
 
     if start == 1:
         smethod = 'Random algorithm'
@@ -59,6 +68,9 @@ def get_start(start):
 
 
 def get_solve(solve):
+    """
+     Format solve method for user input
+    """
 
     if solve == 1:
         solmethod = 'Hillclimber algorithm'
@@ -71,6 +83,9 @@ def get_solve(solve):
 
 
 def write_results(waardes, row):
+    """
+    Write the results from runs to a csv file
+    """
 
     lowest = min(waardes)
     highest = max(waardes)
