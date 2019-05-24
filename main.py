@@ -40,20 +40,20 @@ if __name__ == "__main__":
               "1: Random \n2: Greedy fullwijk \n3: Greedy per house \n4:Greedy quadrants")
 
         methods1 = [1, 2, 3, 4]
-        start = int(input("Startmethod: \n"))
+        start = int(input("Startmethod: "))
         while (start not in methods1):
             print("Please choose between the given methods")
             start = int(input("Startmethod: "))
 
         smethod = mainfunctions.get_start(start)
-        print("Initiate AmstelHaege using {}...".format(smethod))
+        print("\nInitiate AmstelHaege using {}...".format(smethod))
 
         houses_list, water_list, init_worth = mainfunctions.mainstart(start, HOUSES_NUMBER, BREADTH, HEIGHT)
 
         answers = [1, 2]
         print("This is the initial neighbourhood. Would you like to \n"
               "1: Generate a new neighbourhood \n2: Optimize the current neighbourhood")
-        answer = int(input("Option: \n"))
+        answer = int(input("Option: "))
         while (answer not in answers):
             print("Please choose between the given options")
             answer = int(input("Option: "))
@@ -65,30 +65,27 @@ if __name__ == "__main__":
         else:
             print("ERROR")
 
-    print("Please choose the amount of runs and iterations.")
+    print("\nPlease choose the amount of runs and iterations.")
 
     runs = int(input("Runs: "))
-    ITERATIONS = int(input("Iterations: \n"))
+    ITERATIONS = int(input("Iterations: "))
 
-    print("Running ...")
-
+    print("\nRunning ...")
+    row = -1
     for run in range(runs):
+        row = row + 1
         solve1 = 1
         solve2 = 2
         waardes1 = mainfunctions.mainsolve(solve1, ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, init_worth)
         waardes2 = mainfunctions.mainsolve(solve2, ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, init_worth)
-        max1 = mainfunctions.write_results(waardes1, run+1)
-        max2 = mainfunctions.write_results(waardes2, run + 1)
+        max1 = mainfunctions.write_results(waardes1, row + 1)
+        row = row + 1
+        max2 = mainfunctions.write_results(waardes2, row + 1)
         print(f"{run+1}/{runs} runs complete")
-        print(waardes1)
-        print(waardes2)
         vis.linegraph_compare(ITERATIONS+1, waardes1, waardes2)
-        # print(waardes1)
-    # locale.setlocale(locale.LC_ALL, '')
-    # value = locale.currency(worth, grouping=True)
-    print(f"AmstelHaege HC changed from {init_worth/1000000} to {max1}")
-    print(f"AmstelHaege SA changed from {init_worth/1000000} to {max2}")
-
-
-    # print("This is the optimized map! Do you want to use another algorithm on this map?")
-    # answer2 = input("Y/N: ")
+    locale.setlocale(locale.LC_ALL, '')
+    value1 = locale.currency(max1*1000000, grouping=True)
+    value2 = locale.currency(max2*1000000, grouping=True)
+    init_value = locale.currency(init_worth, grouping=True)
+    print(f"AmstelHaege HC changed from {init_value} to {value1}")
+    print(f"AmstelHaege SA changed from {init_value} to {value2}")
