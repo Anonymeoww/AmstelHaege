@@ -3,7 +3,7 @@ Amstelhaege creates ground plans for possible neighbourhoods to be built to the 
 
 A house's worth is dependent on the amount of free space around it. There are three types of houses with different sizes, and they each have a required amount of free space. Extra meters of free space will increase the house's value.
 
-The neighbourhood is also required to include surface water. 20% of the full neighbourhood surface should be water, divided over 1-4 bodies of water. We have chosen to hard-code the position and size of our lakes due to time constraints. 
+The neighbourhood is also required to include surface water. 20% of the full neighbourhood surface should be water, divided over 1-4 bodies of water. We have chosen to hard-code the position and size of our lakes due to time constraints.
 
 This program uses a random or greedy algorithm to initialize a neighbourhood of 20, 40 or 60 houses, and then uses a hillclimber and/or simulated annealing to improve the quality of the solution.
 
@@ -26,7 +26,9 @@ You will be prompted to choose the size of the neighbourhood (20, 40 or 60 house
 choose an algorithm to initialize the neighbourhood (random, greedy or greedy quadrants).
 The program will use your input to generate the neighbourhood, then visualizes the result and shows its worth.
 
-You will then be asked whether you want to optimize this solution, and how many runs of how many iterations you want it to do. The algorithms will then work their magic and get back to you with a visualization of the optimized neighbourhood and its worth. It will also provide you with graphs and statistics on how the algorithms performed over the iterations. This enables you to easily compare results between the hillclimber and simulated annealing.
+You will then be asked whether you want to optimize this solution. If so, you will be able to specify the amount of runs and iterations. The algorithms will then work their magic and get back to you with a visualization of the optimized neighbourhood and its worth. It will also provide you with graphs and statistics on how the algorithms performed over the iterations. This enables you to easily compare results between the hillclimber and simulated annealing.
+
+Please note that running the code will generate a CSV file called *"results.csv"*. This file contains the lowest, highest and average  values of the neighbourhood after every run, and can be used for further analysis of the results.
 
 ## How it works
 
@@ -48,5 +50,5 @@ Like the hillclimber, our simulated annealing algorithm starts with a generated 
 ## Authors
 This program is written by Dilisha Jethoe, Joos Akkerman and Jessica Sam as part of the University of Amsterdam minor in programming.
 
-## Future work / contribute? 
-For future research, we would suggest looking into the role water can play in changing the neighbourhood's worth. We did not have enough time to play around and test different forms of water, or to include the water bodies in our hillclimber or simulated annealing algorithms. 
+## Future work / contribute?
+For future research, we would suggest looking into the role water can play in changing the neighbourhood's worth. We did not have enough time to play around and test different forms of water, or to include the water bodies in our hillclimber or simulated annealing algorithms.
