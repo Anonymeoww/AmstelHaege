@@ -16,7 +16,7 @@ HOUSES_NUMBER = 20
 BREADTH = 320
 HEIGHT = 360
 HILL_ITERATIONS = 500
-ITERATIONS = 5000
+ITERATIONS = 2000
 startmethods = [start, start_greedy_fullwijk, start_greedy_perhouse, start_greedy_wijkquadrants]
 startmethod = startmethods[0]
 

@@ -10,6 +10,7 @@ def waarde(houses_list):
     tot_value = 0
 
     for house in houses_list:
+        # print(house.worth)
         tot_value = tot_value + house.worth
 
     return tot_value
@@ -162,24 +163,36 @@ def gen_water(BREADTH, HEIGHT):
     houses_list = []
     water_list = []
     water_id = 1
-    water_depth = 80
-    water_width = 80
+    water_depth = 137.5
+    water_width = 44
 
-    while len(water_list) < 4:
+    # while len(water_list) < 4:
+    #
+    #     ymin, ymax, xmin, xmax = gen_rand_coord(BREADTH, HEIGHT, water_depth, water_width, 4)
+    #     water = Water(water_id, xmin, xmax, ymin, ymax, water_width, water_depth, 4)
+    #     water_list.append(water)
+    water_combinations = [[0, HEIGHT], [0, water_depth], [BREADTH - water_width, HEIGHT], [BREADTH - water_width, water_depth]]
 
-        ymin, ymax, xmin, xmax = gen_rand_coord(BREADTH, HEIGHT, water_depth, water_width, 4)
+    for water_combination in water_combinations:
+        xmin = water_combination[0]
+        ymax = water_combination[1]
+        xmax = water_combination[0] + water_width
+        ymin = water_combination[1] - water_depth
+        print(xmin, ymin)
         water = Water(water_id, xmin, xmax, ymin, ymax, water_width, water_depth, 4)
         water_list.append(water)
 
-        while check_surr(water_id, houses_list, water_list, BREADTH, HEIGHT) == False:
-            # print("yeet")
-            ymin, ymax, xmin, xmax = gen_rand_coord(BREADTH, HEIGHT, water_depth, water_width, 4)
-            water.ymin = ymin
-            water.ymax = ymax
-            water.xmin = xmin
-            water.xmax = xmax
+        # while check_surr(water_id, houses_list, water_list, BREADTH, HEIGHT) == False:
+        #     # print("yeet")
+        #     ymin, ymax, xmin, xmax = gen_rand_coord(BREADTH, HEIGHT, water_depth, water_width, 4)
+        #     water.ymin = ymin
+        #     water.ymax = ymax
+        #     water.xmin = xmin
+        #     water.xmax = xmax
 
         water_id = water_id + 1
+
+
 
     print(water_list)
     return water_list

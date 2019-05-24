@@ -64,18 +64,18 @@ def grid(water_list, houses_list, worth):
     plt.grid(linestyle="--")
     plt.show()
 
-def SA(temp, chance, xen, nenc):
+def SA(SA_values):
     # np.random.seed(19680801)
     # data = np.random.randn(2, 100)
 
     fig, axs = plt.subplots(2, 2, figsize=(5, 5))
-    axs[0, 0].plot(temp)
+    axs[0, 0].plot(SA_values['temperature'])
     axs[0, 0].set_title('temperature')
-    axs[1, 0].plot(chance)
-    axs[1, 0].set_title("chance")
-    axs[0, 1].plot(xen)
-    axs[0, 1].set_title("X")
-    axs[1, 1].plot(nenc)
-    axs[1, 1].set_title("N-C")
+    axs[1, 0].plot(SA_values['chance'])
+    axs[1, 0].set_title('chance')
+    axs[0, 1].plot(SA_values['X'])
+    axs[0, 1].set_title('X')
+    axs[1, 1].plot(SA_values['N-C'])
+    axs[1, 1].set_title('N-C')
 
     plt.show()

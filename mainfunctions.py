@@ -30,10 +30,13 @@ def mainsolve(solver, ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADT
     solvemethod = solvemethods[solver - 1]
 
     # Optimize AmstelHaege
-    houses_list = solvemethod.call(ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, current_worth)
+    waardes, houses_list = solvemethod.call(ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, current_worth)
     current_worth = helpers.waarde(houses_list)
 
     vis.grid(water_list, houses_list, current_worth)
+    # vis.SA(waardes)
+
+    return waardes, houses_list, current_worth
 
 def get_start(start):
 

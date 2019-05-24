@@ -62,7 +62,7 @@ if __name__ == "__main__":
         solmethod = mainfunctions.get_solve(solve)
         print("Running {}...".format(solmethod))
 
-        mainfunctions.mainsolve(solve, ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, init_worth)
+        waardes, houses_list, current_worth = mainfunctions.mainsolve(solve, ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, init_worth)
         wijk = Wijk(1, current_worth, HOUSES_NUMBER, houses_list)
         wijk_list.append(wijk)
 
