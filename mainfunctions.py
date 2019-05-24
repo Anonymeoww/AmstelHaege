@@ -25,7 +25,7 @@ def mainstart(starter, HOUSES_NUMBER, BREADTH, HEIGHT):
         house.update_worth()
     current_worth = helpers.waarde(houses_list)
     init_worth = current_worth
-    vis.grid(water_list, houses_list, current_worth)
+    vis.grid(water_list, houses_list, current_worth, 'Initialized')
 
     return houses_list, water_list, init_worth
 
@@ -43,7 +43,11 @@ def mainsolve(solver, ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADT
     current_worth = helpers.waarde(houses_list)
 
     # visualize the result
-    vis.grid(water_list, houses_list, current_worth)
+    if solvemethod == HC:
+        vis.grid(water_list, houses_list, current_worth, 'Hill Climber')
+    else:
+        vis.grid(water_list, houses_list, current_worth, 'Simulated Annealing')
+
 
     return waardes
 

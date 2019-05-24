@@ -24,14 +24,16 @@ def linegraph_compare(iter, list1, list2):
     iterations = [item for item in range(0, iter)]
     maxval = max([max(list1), max(list2)])
     minval = min([min(list1), min(list2)])
-    plt.plot(iterations, list1)
-    plt.plot(iterations, list2)
+    plt.title("HC and SA compared")
+    plt.plot(iterations, list1, label='HillClimber')
+    plt.plot(iterations, list2, label='Simulated Annealing')
+    plt.legend(loc='upper left')
     plt.ylabel('Waarde x 1.000.000')
     plt.xlabel('Iteraties')
     plt.axis([0, iter, minval - 0.5, maxval + 0.5])
     plt.show()
 
-def grid(water_list, houses_list, worth):
+def grid(water_list, houses_list, worth, method):
     """
     Visualizes the neighbourhood
     """
@@ -40,7 +42,7 @@ def grid(water_list, houses_list, worth):
     value = locale.currency(worth, grouping=True)
 
     fig, ax = plt.subplots()
-    plt.title("Totale wijkwaarde: {}".format(value))
+    plt.title(f"{method}: Totale wijkwaarde: {value}")
     plt.axis([0, 320, 0, 360])
     ax.set_facecolor('#DBFEB8')
     ax.xaxis.set_major_locator(ticker.MultipleLocator(40))
