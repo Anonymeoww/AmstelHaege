@@ -1,10 +1,12 @@
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 import matplotlib.ticker as ticker
-#  yeet
 import locale
 
 def linegraph(iter, list):
+    """
+    Generates a linegraph that visualizes the HC or SA process
+    """
 
     iterations = [item for item in range(0, iter+1)]
     maxval = max(list)
@@ -16,6 +18,9 @@ def linegraph(iter, list):
     plt.show()
 
 def linegraph_compare(iter, list1, list2):
+    """
+    Generates a linegraph containing outputs for HC and SA
+    """
 
     iterations = [item for item in range(0, iter+1)]
     maxval = max([max(list1), max(list2)])
@@ -28,6 +33,9 @@ def linegraph_compare(iter, list1, list2):
     plt.show()
 
 def grid(water_list, houses_list, worth):
+    """
+    Visualizes the neighbourhood
+    """
 
     locale.setlocale(locale.LC_ALL, '')
     value = locale.currency(worth, grouping=True)
@@ -65,8 +73,9 @@ def grid(water_list, houses_list, worth):
     plt.show()
 
 def SA(SA_values):
-    # np.random.seed(19680801)
-    # data = np.random.randn(2, 100)
+    """
+    Visualizes the outputs used in simulated annealing
+    """
 
     fig, axs = plt.subplots(2, 2, figsize=(5, 5))
     axs[0, 0].plot(SA_values['temperature'])
