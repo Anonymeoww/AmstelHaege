@@ -1,5 +1,4 @@
 import visualize as vis
-from wijken import Wijk
 import mainfunctions
 import sys
 
@@ -7,8 +6,18 @@ HOUSES_NUMBER = 0
 BREADTH = 320
 HEIGHT = 360
 ITERATIONS = 0
-wijk_list = []
-solving = True
+houses_list = []
+water_list = []
+maxis1 = []
+maxis2 = []
+waardes1 = 0
+waardes2 = 0
+init_worth = 0
+max1 = 0
+max2 = 0
+maxi1 = 0
+maxi2 = 0
+initiating = True
 
 if __name__ == "__main__":
     """
@@ -24,58 +33,59 @@ if __name__ == "__main__":
         print("Please choose between 20, 40 or 60 houses.")
         HOUSES_NUMBER = int(input("Size (20, 40, 60): "))
 
-    print("1: Random \n 2: Greedy fullwijk \n 3: Greedy per house \n 4: Greedy quadrants")
+    while initiating == True:
 
-    methods1 = [1, 2, 3, 4]
-    start = int(input("Startmethod: "))
-    while (start not in methods1):
-        print("Please choose between the given methods")
+        print("Choose method of initiating: \n"
+              "1: Random \n2: Greedy fullwijk \n3: Greedy per house \n 4:Greedy quadrants")
+
+        methods1 = [1, 2, 3, 4]
         start = int(input("Startmethod: "))
-
-    smethod = mainfunctions.get_start(start)
-    print("Initiate AmstelHaege using {}...".format(smethod))
-
-    houses_list, water_list, init_worth = mainfunctions.mainstart(start, HOUSES_NUMBER, BREADTH, HEIGHT)
-
-    print("This is the initial neighbourhood. Would you like to optimize this neighbourhood?")
-    answer = input("Y/N: ")
-
-    if answer == 'N':
-        solving = False
-        print("Goodbye!")
-        sys.exit(0)
-
-    elif answer == 'Y':
-        solving = True
-
-    while solving == True:
-
-        print("Please choose an algorithm. \n1: Hillclimber \n2: Simulated Annealing \n")
-        methods2 = [1, 2]
-        solve = int(input("Solvemethod: "))
-        while (solve not in methods2):
+        while (start not in methods1):
             print("Please choose between the given methods")
-            solve = int(input("Solve method: "))
+            start = int(input("Startmethod: "))
 
-        ITERATIONS = int(input("Iterations: "))
+        smethod = mainfunctions.get_start(start)
+        print("Initiate AmstelHaege using {}...".format(smethod))
 
-        solmethod = mainfunctions.get_solve(solve)
-        print("Running {}...".format(solmethod))
+        houses_list, water_list, init_worth = mainfunctions.mainstart(start, HOUSES_NUMBER, BREADTH, HEIGHT)
 
-        waardes, houses_list, current_worth = mainfunctions.mainsolve(solve, ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, init_worth)
-        wijk = Wijk(1, current_worth, HOUSES_NUMBER, houses_list)
-        wijk_list.append(wijk)
+        answers = [1, 2]
+        print("This is the initial neighbourhood. Would you like to \n"
+              "1: Generate a new neighbourhood \n2: Optimize the current neighbourhood")
+        answer = int(input("Option: "))
+        while (answer not in answers):
+            print("Please choose between the given options")
+            answer = int(input("Option: "))
 
-        print(wijk_list)
-        print(f"AmstelHaege changed from {init_worth} to {current_worth}")
+        if answer == 1:
+            initiating = True
+        elif answer == 2:
+            break
+        else:
+            print("ERROR")
 
-        print("This is the optimized map! Do you want to use another algorithm on this map?")
-        answer2 = input("Y/N: ")
+    print("Please choose the amount of runs and iterations.")
 
-        if answer2 == 'N':
-            solving = False
-            print("Goodbye!")
-            sys.exit(0)
+    runs = int(input("Runs: "))
+    ITERATIONS = int(input("Iterations: "))
 
-        elif answer2 == 'Y':
-            solving = True
+    print("Running ...")
+
+    for run in range(runs):
+        solve = 1
+        waardes1 = mainfunctions.mainsolve(solve, ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, init_worth)
+        waardes2 = mainfunctions.mainsolve(solve, ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, init_worth)
+        maxi1 = mainfunctions.write_results(waardes1, run+1)
+        maxi2 = mainfunctions.write_results(waardes2, run + 1)
+        maxis1.append(maxi)
+        if maxi1 > max1:
+            max1 = maxi
+        if maxi2 > max2:
+            max2 = maxi
+        # print(waardes1)
+    print(f"AmstelHaege HC changed from {init_worth/1000000} to {max1}")
+    print(f"AmstelHaege SA changed from {init_worth/1000000} to {max2}")
+
+
+    # print("This is the optimized map! Do you want to use another algorithm on this map?")
+    # answer2 = input("Y/N: ")

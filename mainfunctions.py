@@ -1,4 +1,6 @@
 import start
+import csv
+from statistics import mean
 import start_greedy_perhouse
 import start_greedy_fullwijk
 import start_greedy_wijkquadrants
@@ -6,6 +8,7 @@ import helpers
 import HC
 import SA
 import visualize as vis
+
 
 def mainstart(starter, HOUSES_NUMBER, BREADTH, HEIGHT):
 
@@ -36,7 +39,8 @@ def mainsolve(solver, ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADT
     vis.grid(water_list, houses_list, current_worth)
     # vis.SA(waardes)
 
-    return waardes, houses_list, current_worth
+    return waardes
+
 
 def get_start(start):
 
@@ -53,6 +57,7 @@ def get_start(start):
 
     return smethod
 
+
 def get_solve(solve):
 
     if solve == 1:
@@ -63,3 +68,22 @@ def get_solve(solve):
         solmethod = 'ERROR'
 
     return solmethod
+
+
+def write_results(waardes, run):
+
+    lowest = min(waardes)
+    highest = max(waardes)
+    average = round(mean(waardes), 2)
+
+    if run == 1:
+        with open('results.csv', mode='w') as results:
+            writer = csv.writer(results, delimiter=',')
+            writer.writerow(['Run', 'Lowest Value', 'Highest Value', 'Average Value'])
+            writer.writerow([run, lowest, highest, average])
+    else:
+        with open('results.csv', mode='a') as results:
+            writer = csv.writer(results, delimiter=',')
+            writer.writerow([run, lowest, highest, average])
+
+    return highest
