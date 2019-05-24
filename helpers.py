@@ -254,29 +254,3 @@ def check_lowest_dens(temp_houses_list):
     else:
         return 0, 360, 0, 320
 
-
-def get_start(start):
-
-    if start == 1:
-        smethod = 'Random algorithm'
-    elif start == 2:
-        smethod = 'Greedy fullwijk algorithm'
-    elif start == 3:
-        smethod = 'Greedy per house algorithm'
-    elif start == 4:
-        smethod = 'Greedy quadrant algorithm'
-    else:
-        smethod = 'ERROR'
-
-    return smethod
-
-def get_solve(solve):
-
-    if solve == 1:
-        solmethod = 'Hillclimber algorithm'
-    elif solve == 2:
-        solmethod = 'Simulated Annealing algorithm'
-    else:
-        solmethod = 'ERROR'
-
-    return solmethod
