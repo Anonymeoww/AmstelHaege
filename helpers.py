@@ -22,11 +22,16 @@ def random_replace(houses_number, water_list, houses_list, BREADTH, HEIGHT):
     # select a random house
     house_id = ran.randint(1, houses_number)
 
-    # generate new coordinates
-    for house in houses_list:
-        if house.id == house_id:
-            while True:
-                # randomly determine the direction of movement
+    while True:
+        temp_houses_list = houses_list
+
+        # generate new coordinates
+        for house in temp_houses_list:
+            if house.id == house_id:
+                # save the current values to be able to change them back
+                curr_values = [house.xmin, house.xmax, house.ymin, house.ymax]
+
+                # randomly determine the direction of movement and change house
                 x_change = ran.randint(-1, 1)
                 y_change = ran.randint(-1, 1)
 
@@ -34,8 +39,19 @@ def random_replace(houses_number, water_list, houses_list, BREADTH, HEIGHT):
                 house.xmax = house.xmax + x_change
                 house.ymin = house.ymin + y_change
                 house.ymax = house.ymax + y_change
-                if check_surr(house_id, water_list, houses_list, BREADTH, HEIGHT):
-                    return houses_list
+
+                # check if location house is moved to is possible
+                if check_surr(house_id, water_list, temp_houses_list, BREADTH, HEIGHT):
+                    return temp_houses_list
+                else:
+                    # change house back to initial values
+                    house.xmin = curr_values[0]
+                    house.xmax = curr_values[1]
+                    house.ymin = curr_values[2]
+                    house.ymax = curr_values[3]
+                    # randomly pick new house to move
+                    house_id = ran.randint(1, houses_number)
+
 
 def check_surr(house_id, water_list, houses_list, BREADTH, HEIGHT):
     """
@@ -146,10 +162,11 @@ def gen_water(BREADTH, HEIGHT):
     houses_list = []
     water_list = []
     water_id = 1
-    water_depth = 80.5
-    water_width = 71.6
+    water_depth = 101.2
+    water_width = 113.8
 
-    water_combinations = [[0, HEIGHT], [0, water_depth], [BREADTH - water_width, HEIGHT], [BREADTH - water_width, water_depth]]
+    # water_combinations = [[0, HEIGHT], [0, water_depth], [BREADTH - water_width, HEIGHT], [BREADTH - water_width, water_depth]]
+    water_combinations = [[0, HEIGHT], [BREADTH - water_width, water_depth]]
 
     # generate the coordinates for water
     for water_combination in water_combinations:
