@@ -35,7 +35,10 @@ Please note that running the code will generate a CSV file called *"results.csv"
 ### Random
 The random initializer generates random coordinates for each house. It checks whether the house can be placed at that spot in the grid (so that it won't interfere with another house and won't be placed in water). When that test is passed, the x and y coordinates of the house are saved.
 
-### Greedy
+### Greedy full_wijk 
+In contrast to what its name might suggest, this is actually not a greedy algorithm. This file generates 10 random neighbourhoods, and picks the one with the highest worth as start solution. 
+
+### Greedy per house
 The greedy initializer generates the neighbourhood in a constructive manner. The first house is randomly placed. For each consecutive house, 10 possible places and their worth are considered. The coordinates that provide the highest worth are then used for the new house.
 
 ### Greedy quadrants
