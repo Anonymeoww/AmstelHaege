@@ -1,9 +1,0 @@
-
-class Huis(object):
-    """
-    Representation of a house in Amstelhaege
-    """
-
-    def __init__(self, id):
-        # TODO attributes
-
