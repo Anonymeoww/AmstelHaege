@@ -83,7 +83,7 @@ if __name__ == "__main__":
         max2 = mainfunctions.write_results(waardes2, row + 1)
         print(f"{run+1}/{runs} runs complete")
         vis.linegraph_compare(ITERATIONS+1, waardes1, waardes2)
-    locale.setlocale(locale.LC_ALL, '')
+    locale.setlocale(locale.LC_ALL, 'nl_NL')
     value1 = locale.currency(max1*1000000, grouping=True)
     value2 = locale.currency(max2*1000000, grouping=True)
     init_value = locale.currency(init_worth, grouping=True)

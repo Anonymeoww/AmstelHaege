@@ -36,7 +36,7 @@ def grid(water_list, houses_list, worth):
     Visualizes the neighbourhood
     """
 
-    locale.setlocale(locale.LC_ALL, '')
+    locale.setlocale(locale.LC_ALL, 'nl_NL')
     value = locale.currency(worth, grouping=True)
 
     fig, ax = plt.subplots()
