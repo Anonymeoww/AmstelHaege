@@ -1,5 +1,5 @@
 import visualize as vis
-import callSA
+import SA
 
 import start_greedy_perhouse
 import start
@@ -16,7 +16,7 @@ HOUSES_NUMBER = 20
 BREADTH = 320
 HEIGHT = 360
 HILL_ITERATIONS = 500
-ITERATIONS = 1000
+ITERATIONS = 5000
 startmethods = [start, start_greedy_fullwijk, start_greedy_perhouse, start_greedy_wijkquadrants]
 startmethod = startmethods[0]
 
@@ -25,7 +25,7 @@ if __name__ == "__main__":
     # initieer wijk, plot, visualiseer en geef waarde aan huizen en wijk
     print("Initiate AmstelHaege...")
     water_list, houses_list = startmethod.init(HOUSES_NUMBER, BREADTH, HEIGHT)
-    houses_list = helpers.omlig_ruimte(water_list, houses_list, BREADTH, HEIGHT)
+    first_houses_list = helpers.omlig_ruimte(water_list, houses_list, BREADTH, HEIGHT)
     for house in houses_list:
         house.update_worth()
     current_worth = helpers.waarde(houses_list)
@@ -35,14 +35,16 @@ if __name__ == "__main__":
 
     # for i in range (3):
     print("Running HillClimber..")
-    houses_list = HC.call_HC(HILL_ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, current_worth)
+    waardes_HC, houses_list_HC = HC.call(ITERATIONS, HOUSES_NUMBER, water_list, first_houses_list, BREADTH, HEIGHT, init_worth)
 
     current_worth = helpers.waarde(houses_list)
 
     print("Running Simulated Annealing..")
-    houses_list = callSA.call_SA(ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, current_worth)
+    waardes_SA, houses_list_SA = SA.call(ITERATIONS, HOUSES_NUMBER, water_list, first_houses_list, BREADTH, HEIGHT, init_worth)
 
-    current_worth = helpers.waarde(houses_list)
+    vis.linegraph_compare(ITERATIONS, waardes_HC, waardes_SA)
 
-    vis.grid(houses_list, current_worth)
+    # current_worth = helpers.waarde(houses_list, houses_list_SA)
+
+    # vis.grid(houses_list, current_worth)
     print(f"Change from {init_worth} to {current_worth}")
