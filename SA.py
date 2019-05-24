@@ -9,6 +9,7 @@ def call(ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, cu
     """
 
     done_iterations = 0
+    best_worth = 0
     waardes = []
     SA_values = {'temperature': [], 'N-C': [], 'X': [], 'chance': []}
     best_worth = current_worth
@@ -36,7 +37,7 @@ def call(ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, cu
     # visualize results of generated neighbourhood
     vis.linegraph(done_iterations, waardes)
     vis.SA(SA_results[1])
-    vis.grid(houses_list, best_worth)
+    vis.grid(water_list, houses_list, best_worth)
 
     return waardes, houses_list
 

@@ -28,6 +28,6 @@ def call(ITERATIONS, HOUSES_NUMBER, water_list, houses_list, BREADTH, HEIGHT, cu
     # print(wijk)
 
     # vis.linegraph(done_iterations, waardes)
-    vis.grid(water_list, houses_list, current_worth)
+    #vis.grid(water_list, houses_list, current_worth)
 
     return waardes, houses_list

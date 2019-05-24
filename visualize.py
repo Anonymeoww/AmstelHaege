@@ -21,8 +21,7 @@ def linegraph_compare(iter, list1, list2):
     """
     Generates a linegraph containing outputs for HC and SA
     """
-
-    iterations = [item for item in range(0, iter+1)]
+    iterations = [item for item in range(0, iter)]
     maxval = max([max(list1), max(list2)])
     minval = min([min(list1), min(list2)])
     plt.plot(iterations, list1)
