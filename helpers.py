@@ -172,10 +172,10 @@ def gen_rand_coord(BREADTH, HEIGHT, depth, width, minvr):
     i = ran.randint(1, (BREADTH - minvr))
     j = ran.randint(1, (HEIGHT - depth - minvr))
 
-    ymin = i
-    ymax = i + depth
-    xmin = j
-    xmax = j + width
+    ymin = j
+    ymax = j + depth
+    xmin = i
+    xmax = i + width
 
     return ymin, ymax, xmin, xmax
 
