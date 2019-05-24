@@ -15,6 +15,18 @@ def linegraph(iter, list):
     plt.axis([0, iter, minval - 0.5, maxval + 0.5])
     plt.show()
 
+def linegraph_compare(iter, list1, list2):
+
+    iterations = [item for item in range(0, iter+1)]
+    maxval = max([max(list1), max(list2)])
+    minval = min([min(list1), min(list2)])
+    plt.plot(iterations, list1)
+    plt.plot(iterations, list2)
+    plt.ylabel('Waarde x 1.000.000')
+    plt.xlabel('Iteraties')
+    plt.axis([0, iter, minval - 0.5, maxval + 0.5])
+    plt.show()
+
 def grid(water_list, houses_list, worth):
 
     locale.setlocale(locale.LC_ALL, '')
