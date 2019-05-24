@@ -5,29 +5,27 @@ import random as ran
 
 def waarde(houses_list):
     """
-    Bepaalt de waarde van de wijk
+    Calculates the worth of the neighbourhood
     """
     tot_value = 0
 
     for house in houses_list:
-        # print(house.worth)
         tot_value = tot_value + house.worth
 
     return tot_value
 
 def random_replace(houses_number, water_list, houses_list, BREADTH, HEIGHT):
     """
-    verplaatst random een houses_list
+    Moves a random house in houses_list by half a meter
     """
 
-    # selecteer een willekeurig huis
+    # select a random house
     house_id = ran.randint(1, houses_number)
 
-    # bepaal nieuwe coordinaten:
+    # generate new coordinates
     for house in houses_list:
         if house.id == house_id:
             while True:
-                # print("yeet")
                 # randomly determine the direction of movement
                 x_change = ran.randint(-1, 1)
                 y_change = ran.randint(-1, 1)
@@ -41,20 +39,20 @@ def random_replace(houses_number, water_list, houses_list, BREADTH, HEIGHT):
 
 def check_surr(house_id, water_list, houses_list, BREADTH, HEIGHT):
     """
-    Checkt of het huis de juiste omliggende ruimte heeft
+    Checks whether or not a house has the correct amount of free space
     """
 
     neigh_sol = houses_list
-    numb_houses = len(houses_list)
+
     for house in neigh_sol:
 
-        # check if house is placed too close to the edge
+        # check if house is placed too close to the edge of the map
         if house.xmin > BREADTH - house.width - house.minvr or house.xmin < house.minvr or \
             house.ymin > HEIGHT - house.depth - house.minvr or house.ymin < house.minvr:
             return False
 
+    # save free space data into the neighbouring solution & check for minimum requirement
     neigh_sol = omlig_ruimte(water_list, neigh_sol, BREADTH, HEIGHT)
-
     for house in neigh_sol:
         if house.olr < house.minvr:
             return False
@@ -62,7 +60,7 @@ def check_surr(house_id, water_list, houses_list, BREADTH, HEIGHT):
 
 def omlig_ruimte(water_list, houses_list, BREADTH, HEIGHT):
     """
-    Bepaalt de hoeveelheid omliggende ruimte en voegt toe aan de huizen dict
+    Calculates the amount of free space and saves that data to each house
     """
 
     for house in houses_list:
@@ -93,7 +91,7 @@ def omlig_ruimte(water_list, houses_list, BREADTH, HEIGHT):
                     break
 
 
-        # check if house is placed too close or on top op another house
+        # check if house is placed too close to or on top op another house
         if len(houses_list) > 1:
             for other_house in houses_list:
                 if not other_house.id == id:
@@ -133,10 +131,8 @@ def pythagoras(combinations, other_combinations, house_coords, house):
 
     # check if houses do not overlap
     for other_combination in other_combinations:
-        # print(other_combination)
         if other_combination[0] >= house_coords[0] + house.minvr and other_combination[0] <= house_coords[1] + house.minvr and \
         other_combination[1] >= house_coords[2] + house.minvr and other_combination[1] <= house_coords[3] + house.minvr:
-            # print("YEEEEEEEt")
             house.olr = 0
             break
 
@@ -183,13 +179,14 @@ def gen_rand_coord(BREADTH, HEIGHT, depth, width, minvr):
 
     return ymin, ymax, xmin, xmax
 
-def gen_quadr_coord(depth, width, minvr, temp_houses_list):
+def gen_quadr_coord(depth, width, minvr, temp_houses_list, BREADTH, HEIGHT):
     """
-
+    Generate coordinates within the quadrant with the lowest house density
     """
+    # get the coordinates of the quadrant in which the house should be placed
+    xminQ, xmaxQ, yminQ, ymaxQ = check_lowest_dens(temp_houses_list, BREADTH, HEIGHT)
 
-    xminQ, xmaxQ, yminQ, ymaxQ = check_lowest_dens(temp_houses_list)
-
+    # generate random coordinates within that quadrant
     i = ran.randint(yminQ, (ymaxQ - minvr))
     j = ran.randint(xminQ, (xmaxQ - depth - minvr))
 
@@ -201,7 +198,7 @@ def gen_quadr_coord(depth, width, minvr, temp_houses_list):
     return ymin, ymax, xmin, xmax
 
 
-def check_lowest_dens(temp_houses_list):
+def check_lowest_dens(temp_houses_list, BREADTH, HEIGHT):
     """
     Checks which quadrant has the lowest density in houses
     """
@@ -211,24 +208,25 @@ def check_lowest_dens(temp_houses_list):
     q3 = 0
     q4 = 0
 
+    # count houses per quadrant
     for house in temp_houses_list:
-        if house.xmin < 180 and house.ymin > 160:
+        if house.xmin < (BREADTH / 2) and house.ymin > (HEIGHT / 2):
             q1 += 1
-        elif house.xmin > 180 and house.ymin > 160:
+        elif house.xmin > (BREADTH / 2) and house.ymin > (HEIGHT / 2):
             q2 += 1
-        elif house.xmin < 180 and house.ymin < 160:
+        elif house.xmin < (BREADTH / 2) and house.ymin < (HEIGHT / 2):
             q3 += 1
-        elif house.xmin > 180 and house.ymin < 160:
+        elif house.xmin > (BREADTH / 2) and house.ymin < (HEIGHT / 2):
             q4 += 1
 
-
+    # if one quadrant has less houses than the rest, return those coordinates as bounds
     if q1 < q2 and q1 < q3 and q1 < q4:
-        return 0, 180, 160, 320
+        return 0, (BREADTH / 2), (HEIGHT / 2), HEIGHT
     elif q2 < q1 and q2 < q3 and q2 < q4:
-        return 180, 360, 160, 320
+        return (BREADTH / 2), BREADTH, (HEIGHT / 2), HEIGHT
     elif q3 < q2 and q3 < q1 and q3 < q4:
-        return 0, 180, 0, 160
+        return 0, (BREADTH / 2), 0, (HEIGHT / 2)
     elif q4 < q1 and q4 < q2 and q4 < q3:
-        return 180, 360, 0, 160
+        return (BREADTH / 2), BREADTH, 0, (HEIGHT / 2)
     else:
-        return 0, 360, 0, 320
+        return 0, BREADTH, 0, HEIGHT

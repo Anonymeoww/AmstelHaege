@@ -54,12 +54,14 @@ def init(houses_number, BREADTH, HEIGHT):
 
         temp_houses_list.append(temphouse)
 
+
+
         tries = 0
         while tries < 10:
             placed = False
 
             while placed == False:
-                ymin, ymax, xmin, xmax = helpers.gen_quadr_coord(type['depth'], type['width'], type['minvr'], temp_houses_list)
+                ymin, ymax, xmin, xmax = helpers.gen_quadr_coord(type['depth'], type['width'], type['minvr'], temp_houses_list, BREADTH, HEIGHT)
                 temphouse.ymin = ymin
                 temphouse.ymax = ymax
                 temphouse.xmin = xmin
