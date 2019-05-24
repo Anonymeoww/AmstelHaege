@@ -28,21 +28,25 @@ if __name__ == "__main__":
           "for generating the first neighbourhood. \nFor more information on the methods and algorithms please look at "
           "the README.\n")
 
+    # Ask user to input the size of the neighbourhood to initialize
     sizes = [20, 40, 60]
     get_HOUSES_NUMBER = input("Size (20, 40, 60): ")
 
+    # Make sure the user input is numeric and valid
     while not get_HOUSES_NUMBER.isdigit():
         print("Please choose between 20, 40 or 60 houses1.")
         get_HOUSES_NUMBER = input("Size (20, 40, 60): ")
     while int(get_HOUSES_NUMBER) not in sizes:
         print("Please choose between 20, 40 or 60 houses2.")
         get_HOUSES_NUMBER = input("Size (20, 40, 60): ")
-    HOUSES_NUMBER = get_HOUSES_NUMBER
+    HOUSES_NUMBER = int(get_HOUSES_NUMBER)
 
+    # Ask user to choose an initiation method
     while initiating == True:
         print("Choose method of initiating: \n"
               "1: Random \n2: Greedy fullwijk \n3: Greedy per house \n4:Greedy quadrants")
 
+        # Make sure the user input is numeric and valid
         methods1 = [1, 2, 3, 4]
         get_start = input("Startmethod: ")
         while not get_start.isdigit():
@@ -58,10 +62,13 @@ if __name__ == "__main__":
 
         houses_list, water_list, init_worth = mainfunctions.mainstart(start, HOUSES_NUMBER, BREADTH, HEIGHT)
 
+        # Ask user whether they want to optimize the neighbourhood
         answers = [1, 2]
         print("This is the initial neighbourhood. Would you like to \n"
               "1: Generate a new neighbourhood \n2: Optimize the current neighbourhood")
         get_answer = input("Option: ")
+
+        # Make sure the user input is numeric and valid
         while not get_answer.isdigit():
             print("Please choose between the given options")
             get_answer = input("Option: ")
@@ -77,14 +84,16 @@ if __name__ == "__main__":
         else:
             print("ERROR")
 
+    # Ask user to input number of runs and iterations
     print("\nPlease choose the amount of runs and iterations.")
-
     get_runs = input("Runs: ")
     while not get_runs.isdigit():
         get_runs = input("Please insert a number. Runs: ")
     runs = int(get_runs)
 
     get_iterations = input("Iterations: ")
+
+    # Make sure the user input is numeric and valid
     while not get_iterations.isdigit():
         get_iterations = input("Please insert a number. Iterations: ")
     ITERATIONS = int(get_iterations)

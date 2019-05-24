@@ -1,11 +1,10 @@
-import random as ran
-import wijk
+
 import helpers
 from house import House
 
 def init(houses_number, BREADTH, HEIGHT):
     """
-    Initialiseert een random wijk
+    Initializes a random neighbourhood
     """
 
     # first, randomly place water

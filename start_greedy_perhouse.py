@@ -1,7 +1,5 @@
-import random as ran
-import wijk
+
 import helpers
-import visualize
 from house import House
 
 def init(houses_number, BREADTH, HEIGHT):
