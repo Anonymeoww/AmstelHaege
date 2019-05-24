@@ -70,20 +70,24 @@ def get_solve(solve):
     return solmethod
 
 
-def write_results(waardes, run):
+def write_results(waardes, row):
 
     lowest = min(waardes)
     highest = max(waardes)
     average = round(mean(waardes), 2)
 
-    if run == 1:
-        with open('results.csv', mode='w') as results:
+    if row == 1:
+        with open('results.csv', mode='w', newline="") as results:
             writer = csv.writer(results, delimiter=',')
-            writer.writerow(['Run', 'Lowest Value', 'Highest Value', 'Average Value'])
-            writer.writerow([run, lowest, highest, average])
+            writer.writerow(['Run', 'Algorithm', 'Lowest Value', 'Highest Value', 'Average Value'])
+            writer.writerow([row, "HC", lowest, highest, average])
     else:
-        with open('results.csv', mode='a') as results:
+        if row % 2 == 1:
+            alg = "HC"
+        else:
+            alg = "SA"
+        with open('results.csv', mode='a', newline="") as results:
             writer = csv.writer(results, delimiter=',')
-            writer.writerow([run, lowest, highest, average])
+            writer.writerow([row, alg, lowest, highest, average])
 
     return highest
