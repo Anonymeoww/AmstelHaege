@@ -25,25 +25,33 @@ if __name__ == "__main__":
     Ask user for methods, and create AmstelHaege
     """
     print("Welcome to the AmstelHaege generator. Please choose the amount of houses (20, 40 or 60) and the method"
-          "for generating the first neighbourhood. For more information on the methods and algorithms please look at "
+          "for generating the first neighbourhood. \nFor more information on the methods and algorithms please look at "
           "the README.\n")
 
     sizes = [20, 40, 60]
-    HOUSES_NUMBER = int(input("Size (20, 40, 60): "))
-    while (HOUSES_NUMBER not in sizes):
-        print("Please choose between 20, 40 or 60 houses.")
-        HOUSES_NUMBER = int(input("Size (20, 40, 60): "))
+    get_HOUSES_NUMBER = input("Size (20, 40, 60): ")
+
+    while not get_HOUSES_NUMBER.isdigit():
+        print("Please choose between 20, 40 or 60 houses1.")
+        get_HOUSES_NUMBER = input("Size (20, 40, 60): ")
+    while int(get_HOUSES_NUMBER) not in sizes:
+        print("Please choose between 20, 40 or 60 houses2.")
+        get_HOUSES_NUMBER = input("Size (20, 40, 60): ")
+    HOUSES_NUMBER = get_HOUSES_NUMBER
 
     while initiating == True:
-
         print("Choose method of initiating: \n"
               "1: Random \n2: Greedy fullwijk \n3: Greedy per house \n4:Greedy quadrants")
 
         methods1 = [1, 2, 3, 4]
-        start = int(input("Startmethod: "))
-        while (start not in methods1):
+        get_start = input("Startmethod: ")
+        while not get_start.isdigit():
             print("Please choose between the given methods")
-            start = int(input("Startmethod: "))
+            get_start = input("Startmethod: ")
+        while int(get_start) not in methods1:
+            print("Please choose between the given methods")
+            get_start = input("Startmethod: ")
+        start = int(get_start)
 
         smethod = mainfunctions.get_start(start)
         print("\nInitiate AmstelHaege using {}...".format(smethod))
@@ -53,10 +61,14 @@ if __name__ == "__main__":
         answers = [1, 2]
         print("This is the initial neighbourhood. Would you like to \n"
               "1: Generate a new neighbourhood \n2: Optimize the current neighbourhood")
-        answer = int(input("Option: "))
-        while (answer not in answers):
+        get_answer = input("Option: ")
+        while not get_answer.isdigit():
             print("Please choose between the given options")
-            answer = int(input("Option: "))
+            get_answer = input("Option: ")
+        while int(get_answer) not in answers:
+            print("Please choose between the given options")
+            get_answer = input("Option: ")
+        answer = int(get_answer)
 
         if answer == 1:
             initiating = True
@@ -67,8 +79,15 @@ if __name__ == "__main__":
 
     print("\nPlease choose the amount of runs and iterations.")
 
-    runs = int(input("Runs: "))
-    ITERATIONS = int(input("Iterations: "))
+    get_runs = input("Runs: ")
+    while not get_runs.isdigit():
+        get_runs = input("Please insert a number. Runs: ")
+    runs = int(get_runs)
+
+    get_iterations = input("Iterations: ")
+    while not get_iterations.isdigit():
+        get_iterations = input("Please insert a number. Iterations: ")
+    ITERATIONS = int(get_iterations)
 
     print("\nRunning ...")
     row = -1
